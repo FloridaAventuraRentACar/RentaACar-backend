@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import backend.car_rental.entities.Car;
 import backend.car_rental.entities.Rental;
 
 public interface IRentalRepository extends CrudRepository<Rental,Long>{

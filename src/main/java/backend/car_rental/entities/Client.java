@@ -24,6 +24,7 @@ public class Client {
     private String birthDate;
     private String sex;
 
+    private boolean deleted; //True si el cliente fue eliminado
     
     public Client() {
     }
@@ -99,6 +100,14 @@ public class Client {
     }
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     
