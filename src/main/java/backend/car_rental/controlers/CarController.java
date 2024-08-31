@@ -60,8 +60,9 @@ public class CarController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.save(car));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> create(@RequestBody Car car, @PathVariable Long id){
+    public ResponseEntity<?> update(@RequestBody Car car, @PathVariable Long id){
         Optional<Car> optionalCar = carService.findById(id);
         if (optionalCar.isPresent()) {
             car.setId(optionalCar.get().getId());

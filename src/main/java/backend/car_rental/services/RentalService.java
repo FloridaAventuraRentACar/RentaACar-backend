@@ -13,18 +13,22 @@ public class RentalService implements IRentalService {
 
     @Autowired
     private IRentalRepository rentalRepository;
+
     @Override
     public List<Rental> findAll() {
         return (List<Rental>)rentalRepository.findAll();
     }
+    
+    @Override
+    public List<Rental> findAllDeleted() {
+        return (List<Rental>)rentalRepository.findAllDeleted();
+    }
+
 
     @Override
-    public Rental findById(Long id) {
-        Optional<Rental> optionalRental = rentalRepository.findById(id);
-        if (optionalRental.isPresent()) {
-            return optionalRental.get();
-        }
-        throw new RuntimeException("Rental not found");
+    public Optional<Rental> findById(Long id) {
+        return rentalRepository.findActiveById(id);
+      
     }
 
     @Override
@@ -33,10 +37,9 @@ public class RentalService implements IRentalService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        rentalRepository.findById(id).ifPresent(rental -> {
-            rental.setDeleted(true);
-        });
+    public void delete(Rental rental) {
+        rental.setDeleted(true);
+        rentalRepository.save(rental);
     }
     
 }
