@@ -16,9 +16,9 @@ public class Client {
     private Long id;
 
     private String completeName;
-    private String dni;
+    private Long dni;
     private String email;
-    private String phone;
+    private Long phone;
     private String address;
     private String nationality;
     private String birthDate;
@@ -29,23 +29,8 @@ public class Client {
     public Client() {
     }
 
-    public Client(String completeName, String dni, String phone) {
-        this.completeName = completeName;
-        this.dni = dni;
-        this.phone = phone;
-    }
+    
 
-    public Client(String completeName, String dni, String email, String phone, String address, String nationality,
-            String birthDate, String sex) {
-        this.completeName = completeName;
-        this.dni = dni;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.nationality = nationality;
-        this.birthDate = birthDate;
-        this.sex = sex;
-    }
     
     public Long getId() {
         return id;
@@ -59,10 +44,10 @@ public class Client {
     public void setCompleteName(String completeName) {
         this.completeName = completeName;
     }
-    public String getDni() {
+    public Long getDni() {
         return dni;
     }
-    public void setDni(String dni) {
+    public void setDni(Long dni) {
         this.dni = dni;
     }
     public String getEmail() {
@@ -71,10 +56,10 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getPhone() {
+    public Long getPhone() {
         return phone;
     }
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
     public String getAddress() {

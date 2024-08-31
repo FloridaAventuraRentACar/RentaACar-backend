@@ -22,6 +22,6 @@ public interface IClientRepository extends CrudRepository<Client,Long> {
     Optional<Client> findActiveById(Long id);
     
     @Query("select c from Client c where c.dni = ?1 and c.deleted = false")
-    Optional<Client> findByDni(String dni);
+    Optional<Client> findByDni(Long dni);
 
 }

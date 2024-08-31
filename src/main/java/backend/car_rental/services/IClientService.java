@@ -12,7 +12,7 @@ public interface IClientService {
     List<Client> findAllDeleted();
 
     Optional<Client> findById(Long id);
-    Optional<Client> findByDni(String dni);
+    Optional<Client> findByDni(Long dni);
     
     Client save(Client client);
     void delete(Client client);

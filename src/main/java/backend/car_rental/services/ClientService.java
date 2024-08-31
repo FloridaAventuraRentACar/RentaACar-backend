@@ -46,7 +46,7 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public Optional<Client> findByDni(String dni) {
+    public Optional<Client> findByDni(Long dni) {
 
         return clientRepository.findByDni(dni);
     }
