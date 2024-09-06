@@ -17,7 +17,7 @@ public interface ICarRepository extends CrudRepository<Car,Long>{
     List<Car> findAllDeleted();
 
 
-    @Query("select c from car c where c.id = ?1 and c.deleted = false")
+    @Query("select c from Car c where c.id = ?1 and c.deleted = false")
     Optional<Car> findActiveById(Long id);
     
 }

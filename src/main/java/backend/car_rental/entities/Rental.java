@@ -1,7 +1,8 @@
 package backend.car_rental.entities;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+
+import java.time.LocalDateTime;
+
 import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Entity;
@@ -9,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,27 +27,37 @@ public class Rental {
     @ManyToOne
     private Client client;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    //El formato de LocalDateTime es: "2024-08-30T14:30:00"
+    private LocalDateTime start;
+    private LocalDateTime end;
+
     private long daysRented;
     private double totalPrice;
     private boolean deleted; //True si el alquiler fue eliminado
 
     public Rental() {
     }
+
     
 
-    public Rental(Car car, Client client, LocalDate startDate, LocalDate endDate, LocalTime startTime,
-            LocalTime endTime) {
+    public Rental(Long id, Car car, Client client, LocalDateTime start, LocalDateTime end, long daysRented,
+            double totalPrice, boolean deleted) {
+        this.id = id;
         this.car = car;
         this.client = client;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        daysRented = ChronoUnit.DAYS.between(startDate, endDate);
+        this.start = start;
+        this.end = end;
+        this.daysRented = daysRented;
+        this.totalPrice = totalPrice;
+        this.deleted = deleted;
+    }
+
+
+
+    @PrePersist
+    public void prePersist(){
+        
+        daysRented = ChronoUnit.DAYS.between(start, end);
         totalPrice = car.getPricePerDay() * daysRented;
     }
 
@@ -81,45 +92,24 @@ public class Rental {
     }
 
 
-    public LocalDate getStartDate() {
-        return startDate;
+
+
+
+    public LocalDateTime getStart() {
+        return start;
     }
 
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStart(LocalDateTime start) {
+        this.start = start;
     }
 
-
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
-
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
 
     public long getDaysRented() {
         return daysRented;

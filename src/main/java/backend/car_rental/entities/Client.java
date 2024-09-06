@@ -1,5 +1,7 @@
 package backend.car_rental.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,19 +21,15 @@ public class Client {
     private Long dni;
     private String email;
     private Long phone;
-    private String address;
-    private String nationality;
-    private String birthDate;
-    private String sex;
+
+    private LocalDate bornDate; //Formato: "yyyy-MM-dd"
 
     private boolean deleted; //True si el cliente fue eliminado
     
     public Client() {
+
     }
 
-    
-
-    
     public Long getId() {
         return id;
     }
@@ -62,30 +60,8 @@ public class Client {
     public void setPhone(Long phone) {
         this.phone = phone;
     }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public String getNationality() {
-        return nationality;
-    }
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-    public String getBirthDate() {
-        return birthDate;
-    }
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-    public String getSex() {
-        return sex;
-    }
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
+   
+   
 
     public boolean isDeleted() {
         return deleted;
@@ -94,6 +70,19 @@ public class Client {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    public LocalDate getBornDate() {
+        return bornDate;
+    }
+
+    public void setBornDate(LocalDate bornDate) {
+        this.bornDate = bornDate;
+    }
+
+
+
+
+   
 
     
 }

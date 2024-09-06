@@ -22,9 +22,9 @@ public class Car {
 
     private String color;
 
-    private int passengersAmount; //Cantidad de pasajeros que entran en el auto
+    private int passengersAmount = 5; //Cantidad de pasajeros que entran en el auto
 
-    private boolean automatic; //True si es automatico, false si es manual
+    private boolean automatic = true; //True si es automatico, false si es manual
 
     private int suitcasesAmount; //Cantidad de maletas que puede llevar el auto
 
