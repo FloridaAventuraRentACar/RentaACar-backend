@@ -18,7 +18,6 @@ public class CreateCarDto {
     @NotBlank(message = "The model cannot be empty")
     private String model; 
 
-    @NotBlank(message = "The year cannot be empty")
     @Min(2000)
     private int year;
 

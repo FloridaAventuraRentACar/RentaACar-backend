@@ -6,7 +6,7 @@ import backend.car_rental.entities.Car;
 import java.util.List;
 
 public class CarMapper {
-    public Car toEntity(CreateCarDto carDto){
+    public static Car toEntity(CreateCarDto carDto){
         return Car.builder()
             .plate(carDto.getPlate())
             .brand(carDto.getBrand())
@@ -20,7 +20,7 @@ public class CarMapper {
             .build();
     }
 
-    public ResponseCarDto toDto(Car car){
+    public static ResponseCarDto toDto(Car car){
         return ResponseCarDto.builder()
             .id(car.getId())
             .plate(car.getPlate())
@@ -36,7 +36,7 @@ public class CarMapper {
             .build();
     }
     
-    public List<ResponseCarDto> toDtoList(List<Car> cars){
+    public static List<ResponseCarDto> toDtoList(List<Car> cars){
         return cars.stream()
             .map(c -> toDto(c))
             .toList();

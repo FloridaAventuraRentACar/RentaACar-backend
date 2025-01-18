@@ -1,4 +1,4 @@
-package backend.car_rental.services;
+package backend.car_rental.services.rental.interfaces;
 
 import java.util.List;
 import java.util.Optional;

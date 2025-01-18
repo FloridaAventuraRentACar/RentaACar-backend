@@ -7,8 +7,8 @@ import backend.car_rental.entities.Car;
 import java.util.*;
 public interface ICarRepository extends CrudRepository<Car,Long>{
     
-    @Query("select c from Car c where c.plate = ?1 and c.deleted = false")
-    Optional<Car> findByPlate(String plate);
+    // @Query("select c from Car c where c.plate = ?1 and c.deleted = false")
+    // Optional<Car> findByPlate(String plate);
 
 
     
