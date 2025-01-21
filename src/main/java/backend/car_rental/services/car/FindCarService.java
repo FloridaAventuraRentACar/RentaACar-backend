@@ -1,5 +1,6 @@
 package backend.car_rental.services.car;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,11 @@ public class FindCarService implements IFindCarService{
         }
         return ResponseEntity.ok(CarMapper.toDto(optionalCar.get()));
     }
- 
-    
+
+    @Override
+    public ResponseEntity<List<ResponseCarDto>> getAvailableCars(LocalDateTime startDateTime,
+            LocalDateTime endDateTime) {
+        List<Car> cars = carRepository.getAvailableCars(startDateTime, endDateTime);
+        return ResponseEntity.ok(CarMapper.toDtoList(cars));
+    }
 }
