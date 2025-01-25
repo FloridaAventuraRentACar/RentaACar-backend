@@ -26,6 +26,7 @@ public class CarMapper {
             .plate(car.getPlate())
             .brand(car.getBrand())
             .model(car.getModel())
+            .name(car.getBrand() + " " + car.getModel())
             .year(car.getYear())
             .color(car.getColor())
             .passengersAmount(car.getPassengersAmount())

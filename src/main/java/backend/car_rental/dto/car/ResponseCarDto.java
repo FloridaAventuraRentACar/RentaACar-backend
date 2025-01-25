@@ -14,6 +14,8 @@ public class ResponseCarDto {
 
     private String model; 
 
+    private String name;
+
     private int year; 
 
     private String color;
