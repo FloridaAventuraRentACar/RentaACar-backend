@@ -2,11 +2,13 @@ package backend.car_rental.dto.car;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class CreateCarDto {
 
     @NotBlank(message = "The plate cannot be empty")
@@ -34,19 +36,6 @@ public class CreateCarDto {
     @Min(1)
     private double pricePerDay;
 
-    public CreateCarDto(String plate, String brand, String model, int year,
-            String color, int passengersAmount, boolean manual,
-            int suitcasesAmount, @Min(1) double pricePerDay) {
-        this.plate = plate;
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.color = color;
-        this.passengersAmount = passengersAmount;
-        this.manual = manual;
-        this.suitcasesAmount = suitcasesAmount;
-        this.pricePerDay = pricePerDay;
-    } 
-
+    private String imageUrl;
     
 }

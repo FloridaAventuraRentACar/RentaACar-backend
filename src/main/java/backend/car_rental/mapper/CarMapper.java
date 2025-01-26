@@ -17,6 +17,7 @@ public class CarMapper {
             .manual(carDto.isManual())
             .suitcasesAmount(carDto.getSuitcasesAmount())
             .pricePerDay(carDto.getPricePerDay())
+            .imageUrl(carDto.getImageUrl())
             .build();
     }
 
@@ -33,7 +34,7 @@ public class CarMapper {
             .manual(car.isManual())
             .suitcasesAmount(car.getSuitcasesAmount())
             .pricePerDay(car.getPricePerDay())
-            .hidden(car.isHidden())
+            .imageUrl(car.getImageUrl())
             .build();
     }
     

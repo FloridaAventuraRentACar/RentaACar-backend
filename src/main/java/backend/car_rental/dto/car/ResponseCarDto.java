@@ -1,10 +1,12 @@
 package backend.car_rental.dto.car;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class ResponseCarDto {
     private Long id;
 
@@ -29,5 +31,5 @@ public class ResponseCarDto {
 
     private double pricePerDay; 
 
-    private boolean hidden;
+    private String imageUrl;
 }
