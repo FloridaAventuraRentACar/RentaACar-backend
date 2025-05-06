@@ -1,8 +1,8 @@
 package backend.car_rental.controlers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,77 +11,63 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.*;
+import java.util.List;
 
-import backend.car_rental.entities.Car;
-import backend.car_rental.services.ICarService;
+import backend.car_rental.dto.car.CreateCarDto;
+import backend.car_rental.dto.car.ResponseCarDto;
+import backend.car_rental.services.car.interfaces.IDeleteCarService;
+import backend.car_rental.services.car.interfaces.IFindCarService;
+import backend.car_rental.services.car.interfaces.ISaveCarService;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/cars")
 public class CarController {
     
     @Autowired
-    private ICarService carService;
+    private IFindCarService findCarService;
+    @Autowired
+    private ISaveCarService saveCarService;
+    @Autowired
+    private IDeleteCarService deleteCarService;
 
     @GetMapping
-    public List<Car> findAll(){
+    public ResponseEntity<List<ResponseCarDto>> findAll(){
 
-        return carService.findAll();
-    }
-
-    @GetMapping("/deleted")
-    public List<Car> findAllDeleted(){
-
-        return carService.findAllDeleted();
+        return findCarService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        Optional<Car> optionalCar = carService.findById(id);
-        if (optionalCar.isPresent()) {
-            
-            return ResponseEntity.ok().body(optionalCar.get());
-        }
-        return ResponseEntity.notFound().build();
+
+        return findCarService.findById(id);
     }
 
-    @GetMapping("/plate/{plate}")
-    public ResponseEntity<?> findByPlate(@PathVariable String plate){
-        Optional<Car> optionalCar = carService.findByPlate(plate);
-        if (optionalCar.isPresent()) {
+    // @GetMapping("/plate/{plate}")
+    // public ResponseEntity<?> findByPlate(@PathVariable String plate){
+    //     Optional<Car> optionalCar = findCarService.findByPlate(plate);
+    //     if (optionalCar.isPresent()) {
             
-            return ResponseEntity.ok().body(optionalCar.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
+    //         return ResponseEntity.ok().body(optionalCar.get());
+    //     }
+    //     return ResponseEntity.notFound().build();
+    // }
 
     @PostMapping
-    public ResponseEntity<Car> create(@RequestBody Car car){
+    public ResponseEntity<?> create(@Valid @RequestBody CreateCarDto carDto , BindingResult result){
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(carService.save(car));
+        return saveCarService.save(carDto, result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Car car, @PathVariable Long id){
-        Optional<Car> optionalCar = carService.findById(id);
-        if (optionalCar.isPresent()) {
-            car.setId(optionalCar.get().getId());
-            
-            return ResponseEntity.ok().body(carService.save(car));
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> update(@Valid @RequestBody CreateCarDto carDto, BindingResult result, @PathVariable Long id){
+      return saveCarService.update(carDto,result ,id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
-        Optional<Car> optionalCar = carService.findById(id);
-        if (optionalCar.isPresent()) {
-            Car car = optionalCar.get();
-            carService.delete(car);
-            return ResponseEntity.ok().body(car);
-        }
-        return ResponseEntity.notFound().build();
+        return deleteCarService.delete(id);
     }
 
     

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import backend.car_rental.entities.Client;
-import backend.car_rental.services.IClientService;
+import backend.car_rental.services.client.interfaces.IClientService;
 
 @RestController
 @RequestMapping("/client")

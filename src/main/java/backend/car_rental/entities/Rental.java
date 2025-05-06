@@ -12,7 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "rentals")
 public class Rental {
@@ -33,32 +39,12 @@ public class Rental {
 
     private long daysRented;
     private double totalPrice;
-    private boolean deleted; //True si el alquiler fue eliminado
-
-    public Rental() {
-    }
-
     
-
-    public Rental(Long id, Car car, Client client, LocalDateTime start, LocalDateTime end, long daysRented,
-            double totalPrice, boolean deleted) {
-        this.id = id;
-        this.car = car;
-        this.client = client;
-        this.start = start;
-        this.end = end;
-        this.daysRented = daysRented;
-        this.totalPrice = totalPrice;
-        this.deleted = deleted;
-    }
-
-
-
     @PrePersist
     public void prePersist(){
         
         daysRented = ChronoUnit.DAYS.between(start, end);
-        totalPrice = car.getPricePerDay() * daysRented;
+        totalPrice = car.getPricePerDay() * daysRented; //Se debe modificar para cumplir la regla de negocio
     }
 
 
@@ -90,10 +76,6 @@ public class Rental {
     public void setClient(Client client) {
         this.client = client;
     }
-
-
-
-
 
     public LocalDateTime getStart() {
         return start;
@@ -128,17 +110,5 @@ public class Rental {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-    
-    
+    }    
 }
