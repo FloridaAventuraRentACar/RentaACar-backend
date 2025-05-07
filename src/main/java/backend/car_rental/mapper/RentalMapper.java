@@ -23,7 +23,7 @@ public class RentalMapper {
             .start(rental.getStart())
             .end(rental.getEnd())
             .carName(rental.getCar().getBrand() + " " + rental.getCar().getModel())
-            .clientName(rental.getClient().getCompleteName())
+            .clientName(rental.getClient().getName() + " " + rental.getClient().getSurname())
             .totalPrice(rental.getTotalPrice())
             .daysRented(rental.getDaysRented())
             .build();
