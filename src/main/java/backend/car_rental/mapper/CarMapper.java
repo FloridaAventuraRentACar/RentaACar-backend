@@ -14,7 +14,7 @@ public class CarMapper {
             .year(carDto.getYear())
             .color(carDto.getColor())
             .passengersAmount(carDto.getPassengersAmount())
-            .manual(carDto.isManual())
+            .isManual(carDto.isManual())
             .suitcasesAmount(carDto.getSuitcasesAmount())
             .pricePerDay(carDto.getPricePerDay())
             .imageUrl(carDto.getImageUrl())
