@@ -1,5 +1,6 @@
 package backend.car_rental.entities;
 
+import backend.car_rental.enums.CarType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,5 +45,7 @@ public class Car {
     private boolean hidden;//True si se quiere ocultar al auto
 
     private String imageUrl;
+
+    private CarType type; //Dependiendo el tipo, se le cobrara distinto el tanque de nafta
 
 }
