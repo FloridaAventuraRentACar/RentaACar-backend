@@ -1,7 +1,9 @@
 package backend.car_rental.dto.rental;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import backend.car_rental.dto.client.ResponseClientDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,7 @@ public class ResponseRentalDto {
     private LocalDateTime start;
     private LocalDateTime end;
     private String carName;
-    private String clientName;
+    private List<ResponseClientDto> clients;
     private double totalPrice;
     private long daysRented;
 }

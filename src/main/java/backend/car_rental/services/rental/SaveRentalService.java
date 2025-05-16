@@ -33,27 +33,35 @@ public class SaveRentalService implements ISaveRentalService {
     @Override
     public ResponseEntity<?> save(CreateRentalDto rentalDto, BindingResult result) {
         
+        List<Client> clientsToSave = new ArrayList<>();
+
         if (result.hasErrors()) {
             return Errors.returnSintaxErrors(result);
         }
+
+        for (Long clientId : rentalDto.getClientIds()) {
+
+            Optional<Client> optionalClient = clientRepository.findById(clientId);
+            if (optionalClient.isEmpty()) {
+                return Errors.returnError(
+                "clientId", 
+                "Client " + clientId + " not found", 
+                404
+                );
+            }
+            clientsToSave.add(optionalClient.get());
+        }
+
         Optional<Car> optionalCar = carRepository.findById(rentalDto.getCarId());
-        Optional<Client> optionalClient = clientRepository.findById(rentalDto.getClientId());
-        if (optionalCar.isEmpty()) {
-            return Errors.returnError(
+         if (optionalCar.isEmpty()) {
+                return Errors.returnError(
                 "carId", 
                 "Car not found", 
                 404
-            );
-        }
-        if (optionalClient.isEmpty()) {
-            return Errors.returnError(
-                "clientId", 
-                "Client not found", 
-                404
-            );
+                );
         }
 
-        Rental rentalToSave = RentalMapper.toEntity(rentalDto, optionalCar.get() , optionalClient.get());
+        Rental rentalToSave = RentalMapper.toEntity(rentalDto, optionalCar.get() , clientsToSave);
 
         return ResponseEntity.ok(RentalMapper.toDto(rentalRepository.save(rentalToSave)));
     }

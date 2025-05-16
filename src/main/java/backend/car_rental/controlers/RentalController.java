@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
-@RequestMapping("/rental")
+@RequestMapping("/rentals")
 public class RentalController {
     
     @Autowired

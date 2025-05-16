@@ -4,6 +4,7 @@ package backend.car_rental.entities;
 import java.time.LocalDateTime;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import backend.car_rental.enums.BabySeat;
 import backend.car_rental.enums.GasTank;
@@ -15,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -37,8 +39,8 @@ public class Rental {
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
-    @ManyToOne
-    private Client client;
+    @ManyToMany
+    private List<Client> clients;
 
     //El formato de LocalDateTime es: "2024-08-30T14:30:00"
     private LocalDateTime start;
@@ -125,13 +127,12 @@ public class Rental {
     }
 
 
-    public Client getClient() {
-        return client;
+    public List<Client> getClients() {
+        return clients;
     }
 
-
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 
     public LocalDateTime getStart() {

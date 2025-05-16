@@ -21,7 +21,7 @@ import backend.car_rental.services.client.interfaces.ISaveClientService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
 @CrossOrigin("http://localhost:5173")
 public class ClientController {
     @Autowired

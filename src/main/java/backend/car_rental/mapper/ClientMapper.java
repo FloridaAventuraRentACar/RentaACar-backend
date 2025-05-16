@@ -1,6 +1,8 @@
 package backend.car_rental.mapper;
 
 
+import java.util.List;
+
 import backend.car_rental.dto.client.CreateClientDto;
 import backend.car_rental.dto.client.ResponseClientDto;
 import backend.car_rental.entities.Client;
@@ -35,5 +37,11 @@ public class ClientMapper {
             .licenseExpirationDate(client.getLicenseExpirationDate())
             .mainDriver(client.getMainDriver())
             .build();
+    }
+
+    public static List<ResponseClientDto> toDtoList(List<Client> clients){
+        return clients.stream()
+            .map(c -> tDto(c))
+            .toList();
     }
 }
