@@ -16,6 +16,10 @@ public class RentalMapper {
             .clients(clients)
             .start(rentalDto.getStart())
             .end(rentalDto.getEnd())
+            .insurance(rentalDto.getInsurance())
+            .babySeat(rentalDto.getBabySeat())
+            .travelLocation(rentalDto.getTravelLocation())
+            .gasTank(rentalDto.getGasTank())
             .build();
     }    
 
@@ -28,6 +32,10 @@ public class RentalMapper {
             .clients(ClientMapper.toDtoList(rental.getClients()))
             .totalPrice(rental.getTotalPrice())
             .daysRented(rental.getDaysRented())
+            .insurance(rental.getInsurance())
+            .babySeat(rental.getBabySeat())
+            .travelLocation(rental.getTravelLocation())
+            .gasTank(rental.getGasTank())
             .build();
     }
 }

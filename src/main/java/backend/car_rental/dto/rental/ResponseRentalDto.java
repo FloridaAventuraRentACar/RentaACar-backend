@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import backend.car_rental.dto.client.ResponseClientDto;
+import backend.car_rental.enums.BabySeat;
+import backend.car_rental.enums.GasTank;
+import backend.car_rental.enums.Insurance;
+import backend.car_rental.enums.TravelLocation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +19,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResponseRentalDto {
     private Long id;
+
     private LocalDateTime start;
     private LocalDateTime end;
+
     private String carName;
-    private List<ResponseClientDto> clients;
+    
     private double totalPrice;
     private long daysRented;
+    
+    private Insurance insurance;
+    private BabySeat babySeat;
+    private TravelLocation travelLocation;
+    private GasTank gasTank;
+    
+    private List<ResponseClientDto> clients;
 }
