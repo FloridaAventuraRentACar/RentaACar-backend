@@ -44,4 +44,10 @@ public class ClientMapper {
             .map(c -> tDto(c))
             .toList();
     }
+
+    public static List<Client> toEntityList(List<CreateClientDto> clients){
+        return clients.stream()
+            .map(c -> toEntity(c))
+            .toList();
+    }
 }

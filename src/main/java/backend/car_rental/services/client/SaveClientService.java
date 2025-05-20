@@ -1,5 +1,7 @@
 package backend.car_rental.services.client;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,19 @@ public class SaveClientService implements ISaveClientService {
         Client clientToSave = ClientMapper.toEntity(clientDto);
 
         return ResponseEntity.ok(ClientMapper.tDto(clientRepository.save(clientToSave)));
+    }
+
+    @Override
+    public ResponseEntity<?> saveAll(List<CreateClientDto> clientListDto, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return Errors.returnSintaxErrors(result);
+        }
+
+        List<Client> clientListToSave = ClientMapper.toEntityList(clientListDto);
+
+        return ResponseEntity.ok(ClientMapper.toDtoList((List<Client>) clientRepository.saveAll(clientListToSave)));
+
     }
    
 }

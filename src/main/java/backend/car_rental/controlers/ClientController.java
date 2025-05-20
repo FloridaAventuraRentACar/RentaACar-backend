@@ -36,10 +36,16 @@ public class ClientController {
         return findClientService.findAll();
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody CreateClientDto client, BindingResult result){
 
         return saveClientService.save(client, result);
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<?> createAll(@Valid @RequestBody List<CreateClientDto> clientList, BindingResult result){
+
+        return saveClientService.saveAll(clientList, result);
     }
 
     @GetMapping("/{id}")
