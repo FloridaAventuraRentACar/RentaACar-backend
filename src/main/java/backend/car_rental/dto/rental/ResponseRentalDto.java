@@ -7,6 +7,7 @@ import backend.car_rental.dto.client.ResponseClientDto;
 import backend.car_rental.enums.BabySeat;
 import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
+import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,9 @@ public class ResponseRentalDto {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    private Location pickupLocation;
+    private Location returnLocation;
+    
     private String carName;
     
     private double totalPrice;

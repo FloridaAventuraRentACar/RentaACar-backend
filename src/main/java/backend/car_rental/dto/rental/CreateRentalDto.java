@@ -6,6 +6,7 @@ import java.util.List;
 import backend.car_rental.enums.BabySeat;
 import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
+import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
 import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,9 @@ public class CreateRentalDto {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    private Location pickupLocation;
+    private Location returnLocation;
+    
     private Insurance insurance;
     private BabySeat babySeat;
     private TravelLocation travelLocation;

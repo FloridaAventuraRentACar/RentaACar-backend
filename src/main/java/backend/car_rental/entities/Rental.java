@@ -48,6 +48,7 @@ public class Rental {
 
     private Location pickupLocation;
     private Location returnLocation;
+    
     private Insurance insurance; //Can be deductable or total
     private BabySeat babySeat;
     private TravelLocation travelLocation;//Null if the client is not traveling
