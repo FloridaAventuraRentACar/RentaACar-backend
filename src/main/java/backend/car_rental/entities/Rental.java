@@ -93,7 +93,7 @@ public class Rental {
     }
 
     private int insuranceChargue(){
-        if (insurance == Insurance.DEDUCTABLE){
+        if (insurance == Insurance.DEDUCTIBLE){
             return 15 * daysRented;
         } else {
             return 0;
