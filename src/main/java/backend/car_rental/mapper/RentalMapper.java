@@ -1,5 +1,7 @@
 package backend.car_rental.mapper;
 
+import java.util.List;
+
 import backend.car_rental.dto.rental.CreateRentalDto;
 import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Car;
@@ -8,12 +10,18 @@ import backend.car_rental.entities.Rental;
 
 public class RentalMapper {
     
-    public static Rental toEntity(CreateRentalDto rentalDto, Car car, Client client) {
+    public static Rental toEntity(CreateRentalDto rentalDto, Car car,   List<Client> clients) {
         return Rental.builder()
             .car(car)
-            .client(client)
+            .clients(clients)
             .start(rentalDto.getStart())
             .end(rentalDto.getEnd())
+            .pickupLocation(rentalDto.getPickupLocation())
+            .returnLocation(rentalDto.getReturnLocation())
+            .insurance(rentalDto.getInsurance())
+            .babySeat(rentalDto.getBabySeat())
+            .travelLocation(rentalDto.getTravelLocation())
+            .gasTank(rentalDto.getGasTank())
             .build();
     }    
 
@@ -22,10 +30,16 @@ public class RentalMapper {
             .id(rental.getId())
             .start(rental.getStart())
             .end(rental.getEnd())
+            .pickupLocation(rental.getPickupLocation())
+            .returnLocation(rental.getReturnLocation())
             .carName(rental.getCar().getBrand() + " " + rental.getCar().getModel())
-            .clientName(rental.getClient().getCompleteName())
+            .clients(ClientMapper.toDtoList(rental.getClients()))
             .totalPrice(rental.getTotalPrice())
             .daysRented(rental.getDaysRented())
+            .insurance(rental.getInsurance())
+            .babySeat(rental.getBabySeat())
+            .travelLocation(rental.getTravelLocation())
+            .gasTank(rental.getGasTank())
             .build();
     }
 }

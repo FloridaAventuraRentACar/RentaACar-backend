@@ -14,10 +14,11 @@ public class CarMapper {
             .year(carDto.getYear())
             .color(carDto.getColor())
             .passengersAmount(carDto.getPassengersAmount())
-            .manual(carDto.isManual())
+            .isManual(carDto.isManual())
             .suitcasesAmount(carDto.getSuitcasesAmount())
             .pricePerDay(carDto.getPricePerDay())
             .imageUrl(carDto.getImageUrl())
+            .type(carDto.getType())
             .build();
     }
 
@@ -35,6 +36,7 @@ public class CarMapper {
             .suitcasesAmount(car.getSuitcasesAmount())
             .pricePerDay(car.getPricePerDay())
             .imageUrl(car.getImageUrl())
+            .type(car.getType())
             .build();
     }
     

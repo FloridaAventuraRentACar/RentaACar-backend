@@ -1,5 +1,6 @@
 package backend.car_rental.entities;
 
+import backend.car_rental.enums.CarType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,12 +12,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity
-@Table(name = "cars")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Entity
+@Table(name = "cars")
 public class Car {
 
     @Id
@@ -35,7 +36,7 @@ public class Car {
 
     private int passengersAmount; //Cantidad de pasajeros que entran en el auto
 
-    private boolean manual; //True si es manual, false si es automatico
+    private boolean isManual; //True si es manual, false si es automatico
 
     private int suitcasesAmount; //Cantidad de maletas que puede llevar el auto
 
@@ -44,5 +45,7 @@ public class Car {
     private boolean hidden;//True si se quiere ocultar al auto
 
     private String imageUrl;
+
+    private CarType type; //Dependiendo el tipo, se le cobrara distinto el tanque de nafta
 
 }
