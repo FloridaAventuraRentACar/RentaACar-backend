@@ -1,8 +1,6 @@
 package backend.car_rental.repositories;
 
-import java.util.Optional;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 

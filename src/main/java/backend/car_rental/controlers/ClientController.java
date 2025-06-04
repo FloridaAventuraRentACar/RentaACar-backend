@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,8 @@ import backend.car_rental.services.client.interfaces.ISaveClientService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
+@CrossOrigin("http://localhost:5173")
 public class ClientController {
     @Autowired
     private IFindClientService findClientService;
@@ -34,10 +36,16 @@ public class ClientController {
         return findClientService.findAll();
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody CreateClientDto client, BindingResult result){
 
         return saveClientService.save(client, result);
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<?> createAll(@Valid @RequestBody List<CreateClientDto> clientList, BindingResult result){
+
+        return saveClientService.saveAll(clientList, result);
     }
 
     @GetMapping("/{id}")

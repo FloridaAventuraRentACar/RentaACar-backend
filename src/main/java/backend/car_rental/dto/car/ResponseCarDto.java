@@ -1,5 +1,6 @@
 package backend.car_rental.dto.car;
 
+import backend.car_rental.enums.CarType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +33,6 @@ public class ResponseCarDto {
     private double pricePerDay; 
 
     private String imageUrl;
+
+    private CarType type;
 }

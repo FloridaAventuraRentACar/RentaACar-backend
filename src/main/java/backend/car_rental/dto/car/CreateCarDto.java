@@ -1,5 +1,6 @@
 package backend.car_rental.dto.car;
 
+import backend.car_rental.enums.CarType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,5 @@ public class CreateCarDto {
 
     private String imageUrl;
     
+    private CarType type;
 }

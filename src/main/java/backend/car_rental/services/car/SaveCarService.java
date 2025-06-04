@@ -22,9 +22,11 @@ public class SaveCarService implements ISaveCarService{
 
     @Override
     public ResponseEntity<?> save(CreateCarDto carDto , BindingResult result) {
+
         if (result.hasErrors()) {
             return Errors.returnSintaxErrors(result);
         }
+        
         Car carSaved = carRepository.save(CarMapper.toEntity(carDto));
         return ResponseEntity.ok(CarMapper.toDto(carSaved));
     }
