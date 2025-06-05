@@ -3,6 +3,7 @@ package backend.car_rental.mapper;
 import java.util.List;
 
 import backend.car_rental.dto.rental.CreateRentalDto;
+import backend.car_rental.dto.rental.CurrentRentalsResponseDto;
 import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Car;
 import backend.car_rental.entities.Client;
@@ -42,4 +43,22 @@ public class RentalMapper {
             .gasTank(rental.getGasTank())
             .build();
     }
+
+    public static CurrentRentalsResponseDto toCurrentRentalDto(Rental rental) {
+        return CurrentRentalsResponseDto.builder()
+            .carName(rental.getCar().getBrand() + " " + rental.getCar().getModel())
+            .clientName(rental.getClients().get(0).getName() + " " + rental.getClients().get(0).getSurname())
+            .start(rental.getStart().toLocalDate())
+            .end(rental.getEnd().toLocalDate())
+            .totalPrice(rental.getTotalPrice())
+            .build();
+    }
+
+    public static List<CurrentRentalsResponseDto> toCurrentRentalDtoList(List<Rental> rentals) {
+        return rentals
+            .stream()
+            .map(RentalMapper::toCurrentRentalDto)
+            .toList();
+    }
+
 }

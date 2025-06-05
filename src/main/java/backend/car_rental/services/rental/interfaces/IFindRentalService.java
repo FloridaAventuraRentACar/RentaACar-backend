@@ -4,4 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface IFindRentalService {
     ResponseEntity<?> findCurrentRentals();
+    ResponseEntity<?> findRentalById(Long id);
 }
