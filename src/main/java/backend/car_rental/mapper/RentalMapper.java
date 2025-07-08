@@ -46,6 +46,7 @@ public class RentalMapper {
 
     public static CurrentRentalsResponseDto toCurrentRentalDto(Rental rental) {
         return CurrentRentalsResponseDto.builder()
+            .id(rental.getId())
             .carName(rental.getCar().getBrand() + " " + rental.getCar().getModel())
             .clientName(rental.getClients().get(0).getName() + " " + rental.getClients().get(0).getSurname())
             .start(rental.getStart().toLocalDate())

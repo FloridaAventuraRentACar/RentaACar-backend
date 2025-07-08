@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CurrentRentalsResponseDto {
 
+    private Long id;
     private String carName;
     private String clientName;
     private LocalDate start;
