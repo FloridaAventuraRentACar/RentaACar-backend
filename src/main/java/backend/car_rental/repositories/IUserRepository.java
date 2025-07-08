@@ -8,5 +8,6 @@ import backend.car_rental.entities.User;
 
 public interface IUserRepository extends CrudRepository<User, Long> {
     
-    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+    
 }
