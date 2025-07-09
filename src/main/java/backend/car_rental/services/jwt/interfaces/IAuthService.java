@@ -3,7 +3,7 @@ package backend.car_rental.services.jwt.interfaces;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import backend.car_rental.dto.jwt.AuthRequest;
+import backend.car_rental.dto.jwt.login.AuthRequest;
 
 public interface IAuthService {
 

@@ -1,6 +1,6 @@
 package backend.car_rental.mapper;
 
-import backend.car_rental.dto.jwt.LoginResponse;
+import backend.car_rental.dto.jwt.login.LoginResponse;
 
 public class AuthMapper {
     

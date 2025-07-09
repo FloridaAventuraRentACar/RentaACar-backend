@@ -1,4 +1,4 @@
-package backend.car_rental.dto.jwt;
+package backend.car_rental.dto.jwt.signUp;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AuthRequest {
-
+public class SignUpRequest {
+    
     @Email
     private String email;
 

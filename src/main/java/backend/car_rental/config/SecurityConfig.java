@@ -2,6 +2,7 @@ package backend.car_rental.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,8 +43,11 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").authenticated() // protege las rutas admin
-                        .anyRequest().permitAll() //
+                        .requestMatchers(HttpMethod.GET, "/rentals/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/cars").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/cars/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/cars/**").authenticated()
+                        .anyRequest().permitAll() 
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -10,4 +10,5 @@ public interface IUserRepository extends CrudRepository<User, Long> {
     
     Optional<User> findByEmail(String email);
     
+    Boolean existsByEmail(String email);
 }

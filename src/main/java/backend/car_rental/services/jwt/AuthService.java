@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import backend.car_rental.dto.jwt.AuthRequest;
+import backend.car_rental.dto.jwt.login.AuthRequest;
 import backend.car_rental.entities.User;
 import backend.car_rental.errors.Errors;
 import backend.car_rental.mapper.AuthMapper;

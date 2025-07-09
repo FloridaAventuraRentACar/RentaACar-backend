@@ -1,4 +1,4 @@
-package backend.car_rental.dto.jwt;
+package backend.car_rental.dto.jwt.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
