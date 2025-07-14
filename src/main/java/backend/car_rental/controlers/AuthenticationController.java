@@ -17,7 +17,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
 @AllArgsConstructor
 public class AuthenticationController {
 

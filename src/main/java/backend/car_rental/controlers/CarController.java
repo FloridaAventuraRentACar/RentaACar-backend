@@ -21,7 +21,6 @@ import backend.car_rental.services.car.interfaces.IFindCarService;
 import backend.car_rental.services.car.interfaces.ISaveCarService;
 import jakarta.validation.Valid;
 
-@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("/cars")
 public class CarController {

@@ -5,7 +5,6 @@ package backend.car_rental.controlers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import backend.car_rental.services.rental.interfaces.IFindRentalService;
 import backend.car_rental.services.rental.interfaces.ISaveRentalService;
 import jakarta.validation.Valid;
 
-@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("/rentals")
 public class RentalController {

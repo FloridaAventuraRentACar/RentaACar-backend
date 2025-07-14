@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.car_rental.services.car.interfaces.IFindCarService;
 
-@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("/availability")
 public class AvaibilityController {

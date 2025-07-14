@@ -22,7 +22,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clients")
-@CrossOrigin("http://localhost:5173")
 public class ClientController {
     @Autowired
     private IFindClientService findClientService;
