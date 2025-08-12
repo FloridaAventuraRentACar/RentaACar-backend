@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class CurrentRentalsResponseDto {
 
     private Long id;
+    private Long carId;
     private String carName;
     private String clientName;
     private LocalDate start;

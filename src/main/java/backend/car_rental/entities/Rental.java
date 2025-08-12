@@ -11,6 +11,7 @@ import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
 import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,11 +23,13 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "rentals")
 public class Rental {
@@ -39,7 +42,7 @@ public class Rental {
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Client> clients;
 
     //El formato de LocalDateTime es: "2024-08-30T14:30:00"
@@ -49,9 +52,9 @@ public class Rental {
     private Location pickupLocation;
     private Location returnLocation;
     
-    private Insurance insurance; //Can be deductable or total
+    private Insurance insurance; //Puede ser deductable o total
     private BabySeat babySeat;
-    private TravelLocation travelLocation;//Null if the client is not traveling
+    private TravelLocation travelLocation; //Null si el cliente no viaja fuera de Miami
     private GasTank gasTank;
 
     private int daysRented;
@@ -71,7 +74,7 @@ public class Rental {
     private void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
-        + insuranceChargue() + babySeatCharge();
+        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
     }
 
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto
@@ -107,128 +110,14 @@ public class Rental {
             return 3 * daysRented;
         }
     }
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public Car getCar() {
-        return car;
-    }
-
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-
-    public long getDaysRented() {
-        return daysRented;
-    }
-
-
-    public void setDaysRented(int daysRented) {
-        this.daysRented = daysRented;
-    }
-
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-
-    public Location getPickupLocation() {
-        return pickupLocation;
-    }
-
-
-    public void setPickupLocation(Location pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-
-    public Location getReturnLocation() {
-        return returnLocation;
-    }
-
-
-    public void setReturnLocation(Location returnLocation) {
-        this.returnLocation = returnLocation;
-    }
-
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
-
-
-    public BabySeat getBabySeat() {
-        return babySeat;
-    }
-
-
-    public void setBabySeat(BabySeat babySeat) {
-        this.babySeat = babySeat;
-    }
-
-
-    public TravelLocation getTravelLocation() {
-        return travelLocation;
-    }
-
-
-    public void setTravelLocation(TravelLocation travelLocation) {
-        this.travelLocation = travelLocation;
-    }
-
-
-    public GasTank getGasTank() {
-        return gasTank;
-    }
-
-
-    public void setGasTank(GasTank gasTank) {
-        this.gasTank = gasTank;
-    }    
     
+    //A partir del segundo conductor adicional se le cobra 5 dolares por dia
+    private int additionalDriversCharge(){
+        if (clients.size() > 2){
+            return (daysRented * 5) * (clients.size() - 2);
+        } else {
+            return 0;
+            
+        }
+    }
 }

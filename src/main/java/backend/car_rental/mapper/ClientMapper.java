@@ -5,6 +5,7 @@ import java.util.List;
 
 import backend.car_rental.dto.client.CreateClientDto;
 import backend.car_rental.dto.client.ResponseClientDto;
+import backend.car_rental.dto.client.UpdateClientDto;
 import backend.car_rental.entities.Client;
 
 public class ClientMapper {
@@ -48,6 +49,28 @@ public class ClientMapper {
     public static List<Client> toEntityList(List<CreateClientDto> clients){
         return clients.stream()
             .map(c -> toEntity(c))
+            .toList();
+    }
+
+    public static Client toUpdateModel(UpdateClientDto clientDto){
+        return Client.builder()
+            .id(clientDto.getId())
+            .name(clientDto.getName())
+            .surname(clientDto.getSurname())
+            .email(clientDto.getEmail())
+            .phone(clientDto.getPhone())
+            .licenseName(clientDto.getLicenseName())
+            .licenseNumber(clientDto.getLicenseNumber())
+            .licenseAddress(clientDto.getLicenseAddress())
+            .bornDate(clientDto.getBornDate())
+            .licenseExpirationDate(clientDto.getLicenseExpirationDate())
+            .mainDriver(clientDto.getMainDriver())
+            .build();
+    }
+
+    public static List<Client> toUpdateModelList(List<UpdateClientDto> clients){
+        return clients.stream()
+            .map(c -> toUpdateModel(c))
             .toList();
     }
 }

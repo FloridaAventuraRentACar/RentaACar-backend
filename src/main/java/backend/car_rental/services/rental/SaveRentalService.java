@@ -2,7 +2,6 @@ package backend.car_rental.services.rental;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -16,19 +15,19 @@ import backend.car_rental.mapper.RentalMapper;
 import backend.car_rental.repositories.ICarRepository;
 import backend.car_rental.repositories.IClientRepository;
 import backend.car_rental.repositories.IRentalRepository;
+import backend.car_rental.services.rental.interfaces.IRentalCheckAvaibilityService;
 import backend.car_rental.services.rental.interfaces.ISaveRentalService;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class SaveRentalService implements ISaveRentalService {
 
-    @Autowired
     private IRentalRepository rentalRepository;
-
-    @Autowired
     private ICarRepository carRepository;
-
-    @Autowired
     private IClientRepository clientRepository;
+    private IRentalCheckAvaibilityService rentalCheckAvaibilityService;
+
 
     @Override
     public ResponseEntity<?> save(CreateRentalDto rentalDto, BindingResult result) {
@@ -37,6 +36,13 @@ public class SaveRentalService implements ISaveRentalService {
 
         if (result.hasErrors()) {
             return Errors.returnSintaxErrors(result);
+        }
+ 
+        if (!rentalCheckAvaibilityService.isAvailable(rentalDto.getCarId() , rentalDto.getStart(), rentalDto.getEnd())) {
+            return Errors.returnError(
+                "CarId", 
+                "Car is not available in that dates",
+                409);
         }
 
         for (Long clientId : rentalDto.getClientIds()) {
