@@ -3,6 +3,7 @@ package backend.car_rental.dto.client;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,9 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class CreateClientDto {
+    @NotBlank
     private String name;
+    @NotBlank
     private String surname;
 
     @Email

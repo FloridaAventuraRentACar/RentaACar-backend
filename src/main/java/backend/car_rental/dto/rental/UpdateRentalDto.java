@@ -8,6 +8,7 @@ import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
 import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ public class UpdateRentalDto {
     private Long carId;
 
     @NotEmpty
+    @Valid
     private List<UpdateClientDto> clients;
 
     @Future
