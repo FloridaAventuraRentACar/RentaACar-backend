@@ -1,9 +1,8 @@
 package backend.car_rental.entities;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import backend.car_rental.enums.BabySeat;
@@ -67,8 +66,16 @@ public class Rental {
         calculateTotalPrice();
     }
 
-    private void calculateDaysRented(){ //Cambiar para que coincida con la regla de negocio
-        daysRented = (int) ChronoUnit.DAYS.between(start, end);
+    //A partir de las 3 horas, se cobra el dia completo
+    private void calculateDaysRented(){ 
+
+        Long totalHours = Duration.between(start, end).toHours();
+
+        daysRented = (int) (totalHours / 24);
+        
+        if (totalHours % 24 > 3){
+            daysRented++;
+        }
     }
 
     private void calculateTotalPrice(){
@@ -96,7 +103,7 @@ public class Rental {
     }
 
     private int insuranceChargue(){
-        if (insurance == Insurance.DEDUCTIBLE){
+        if (insurance == Insurance.TOTAL){
             return 15 * daysRented;
         } else {
             return 0;
