@@ -12,6 +12,7 @@ import backend.car_rental.enums.TravelLocation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,11 +36,18 @@ public class CreateRentalDto {
     @Future
     private LocalDateTime end;
 
+    @NotNull
     private Location pickupLocation;
+    @NotNull
     private Location returnLocation;
     
+    @NotNull
     private Insurance insurance;
+    @NotNull
     private BabySeat babySeat;
+    @NotNull
     private TravelLocation travelLocation;
+    @NotNull
     private GasTank gasTank;
+    
 }

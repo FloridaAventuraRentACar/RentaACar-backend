@@ -38,11 +38,17 @@ public class UpdateRentalDto {
     @NotNull
     private LocalDateTime end;
 
+    @NotNull
     private Location pickupLocation;
+    @NotNull
     private Location returnLocation;
     
+    @NotNull
     private Insurance insurance;
+    @NotNull
     private BabySeat babySeat;
+    @NotNull
     private TravelLocation travelLocation;
+    @NotNull
     private GasTank gasTank;
 }

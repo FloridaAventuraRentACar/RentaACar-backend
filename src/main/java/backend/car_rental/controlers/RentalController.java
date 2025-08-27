@@ -1,7 +1,6 @@
 package backend.car_rental.controlers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import backend.car_rental.dto.rental.CreateRentalDto;
+import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.dto.rental.UpdateRentalDto;
 import backend.car_rental.services.rental.interfaces.IFindRentalService;
 import backend.car_rental.services.rental.interfaces.IRentalDeleteService;
@@ -31,8 +30,8 @@ public class RentalController {
     private IRentalDeleteService deleteRentalService;
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody CreateRentalDto rentalDto , BindingResult result){
-        return saveRentalService.save(rentalDto, result);
+    public ResponseEntity<ResponseRentalDto> create(@Valid @RequestBody CreateRentalDto rentalDto){
+        return ResponseEntity.ok().body(saveRentalService.save(rentalDto));
     }
 
     @GetMapping("/current")
@@ -47,8 +46,8 @@ public class RentalController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody UpdateRentalDto rentalDto, BindingResult result , @PathVariable Long id){
-        return updateRentalService.update(rentalDto, result, id);
+    public ResponseEntity<ResponseRentalDto> update(@Valid @RequestBody UpdateRentalDto rentalDto, @PathVariable Long id){
+        return ResponseEntity.ok().body(updateRentalService.update(rentalDto, id));
     }
 
     @DeleteMapping("{id}")

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
+import backend.car_rental.exceptions.ConflictException;
 import backend.car_rental.repositories.IRentalRepository;
 import backend.car_rental.services.rental.interfaces.IRentalCheckAvaibilityService;
 import lombok.AllArgsConstructor;
@@ -15,15 +16,19 @@ public class RentalCheckAvaibilityService implements IRentalCheckAvaibilityServi
     private final IRentalRepository rentalRepository;
 
     @Override
-    public boolean isAvailable(Long carId, LocalDateTime startDate, LocalDateTime endDate) {
+    public void isAvailable(Long carId, LocalDateTime startDate, LocalDateTime endDate) {
         
-        return !rentalRepository.existsByCarIdAndDates(startDate, endDate, carId);
+        if (!rentalRepository.existsByCarIdAndDates(startDate, endDate, carId)) {
+            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates");
+        };
     }
 
     @Override
-    public boolean isAvailableExceptId( Long rentalId, Long carId, LocalDateTime startDate, LocalDateTime endDate) {
+    public void isAvailableExceptId( Long rentalId, Long carId, LocalDateTime startDate, LocalDateTime endDate) {
         
-        return !rentalRepository.existsByCarIdAndDatesExceptId(startDate, endDate, carId , rentalId);
+        if (!rentalRepository.existsByCarIdAndDatesExceptId(startDate, endDate, carId , rentalId)) {
+            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates");
+        };
     }
     
     
