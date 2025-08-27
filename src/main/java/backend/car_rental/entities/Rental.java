@@ -19,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,6 +65,13 @@ public class Rental {
 
         calculateDaysRented();        
         calculateTotalPrice();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+
+        calculateDaysRented();        
+        //No calculo el total ya que se puede modificar desde el frontend y no coincidir con la regla de negocio.
     }
 
     //A partir de las 3 horas, se cobra el dia completo
