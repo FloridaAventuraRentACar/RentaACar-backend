@@ -34,6 +34,7 @@ public class RentalMapper {
             .end(rental.getEnd())
             .pickupLocation(rental.getPickupLocation())
             .returnLocation(rental.getReturnLocation())
+            .carId(rental.getCar().getId())
             .carName(rental.getCar().getBrand() + " " + rental.getCar().getModel())
             .clients(ClientMapper.toDtoList(rental.getClients()))
             .totalPrice(rental.getTotalPrice())

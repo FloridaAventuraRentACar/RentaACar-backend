@@ -43,9 +43,9 @@ public class CreateRentalDto {
     
     @NotNull
     private Insurance insurance;
+    
     @NotNull
     private BabySeat babySeat;
-    @NotNull
     private TravelLocation travelLocation;
     @NotNull
     private GasTank gasTank;

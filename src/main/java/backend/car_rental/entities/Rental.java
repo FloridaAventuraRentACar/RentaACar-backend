@@ -71,6 +71,7 @@ public class Rental {
     public void preUpdate(){
 
         calculateDaysRented();        
+        calculateTotalPrice();
         //No calculo el total ya que se puede modificar desde el frontend y no coincidir con la regla de negocio.
     }
 

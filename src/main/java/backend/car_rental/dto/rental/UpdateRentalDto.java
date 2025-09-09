@@ -47,7 +47,7 @@ public class UpdateRentalDto {
     private Insurance insurance;
     @NotNull
     private BabySeat babySeat;
-    @NotNull
+
     private TravelLocation travelLocation;
     @NotNull
     private GasTank gasTank;
