@@ -30,11 +30,9 @@ public class UpdateRentalDto {
     @Valid
     private List<UpdateClientDto> clients;
 
-    @Future
     @NotNull
     private LocalDateTime start;
 
-    @Future
     @NotNull
     private LocalDateTime end;
 
