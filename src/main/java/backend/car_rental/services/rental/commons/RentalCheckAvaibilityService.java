@@ -19,7 +19,7 @@ public class RentalCheckAvaibilityService implements IRentalCheckAvaibilityServi
     public void isAvailable(Long carId, LocalDateTime startDate, LocalDateTime endDate) {
         
         if (rentalRepository.existsByCarIdAndDates(startDate, endDate, carId)) {
-            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates");
+            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates", "CAR_NOT_AVAILABLE");
         };
     }
 
@@ -27,7 +27,7 @@ public class RentalCheckAvaibilityService implements IRentalCheckAvaibilityServi
     public void isAvailableExceptId( Long rentalId, Long carId, LocalDateTime startDate, LocalDateTime endDate) {
         
         if (rentalRepository.existsByCarIdAndDatesExceptId(startDate, endDate, carId , rentalId)) {
-            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates");
+            throw new ConflictException("Car with id " + carId + " is not available between " + startDate + " and " + endDate + " dates", "CAR_NOT_AVAILABLE");
         };
     }
     
