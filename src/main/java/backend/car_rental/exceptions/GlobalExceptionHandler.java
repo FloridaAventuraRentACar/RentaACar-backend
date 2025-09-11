@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<BaseResponse<Object>> handleCustomException(CustomException ex) {
         BaseResponse<Object> response = BaseResponse.<Object>builder()
                 .data(null)
+                .code()
                 .message(ex.getMessage())
                 .errors(ex.getErrors())
                 .timestamp(getCurrentTimestamp())

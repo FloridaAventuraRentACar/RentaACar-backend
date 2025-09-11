@@ -9,9 +9,11 @@ import java.util.List;
 public abstract class CustomException extends RuntimeException {
     private final HttpStatus status;
     private final List<String> errors;
+    private final String code;
 
-    public CustomException(String message, HttpStatus status, List<String> errors) {
+    public CustomException(String message, HttpStatus status, List<String> errors, String code) {
         super(message);
+        this.code = code;
         this.status = status;
         this.errors = errors;
     }
