@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 public class BaseResponse<T> {
     private final T data;
+    private final String code;
     private final String message;
     private final List<String> errors;
     private final String timestamp;
