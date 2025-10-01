@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>backend</groupId>
 	<artifactId>car_rental</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>car_rental</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -54,6 +54,7 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
+			<version>8.3.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -90,6 +91,12 @@
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+    		<groupId>com.h2database</groupId>
+    		<artifactId>h2</artifactId>
+    		<scope>test</scope>
 		</dependency>
 	</dependencies>
 
