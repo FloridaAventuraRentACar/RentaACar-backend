@@ -1,0 +1,17 @@
+server:
+  port: 0   
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Crea y elimina la BD en cada ejecución de test
+    show-sql: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+JWT_KEY: test_secret_key_de_32_caracteres_minimo

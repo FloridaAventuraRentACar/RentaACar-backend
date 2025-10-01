@@ -3,15 +3,16 @@ package backend.car_rental.dto.rental;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import backend.car_rental.dto.client.CreateClientDto;
 import backend.car_rental.enums.BabySeat;
 import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
 import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,17 +27,27 @@ public class CreateRentalDto {
     private Long carId;
 
     @NotEmpty
-    private List<Long> clientIds;
+    @Valid
+    private List<CreateClientDto> clients;
 
     @Future
     private LocalDateTime start;
+
+    @Future
     private LocalDateTime end;
 
+    @NotNull
     private Location pickupLocation;
+    @NotNull
     private Location returnLocation;
     
+    @NotNull
     private Insurance insurance;
+    
+    @NotNull
     private BabySeat babySeat;
     private TravelLocation travelLocation;
+    @NotNull
     private GasTank gasTank;
+    
 }

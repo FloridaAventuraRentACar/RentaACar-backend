@@ -1,75 +1,42 @@
 package backend.car_rental.services.rental;
 
 import java.util.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-
+import org.springframework.transaction.annotation.Transactional;
 import backend.car_rental.dto.rental.CreateRentalDto;
+import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Car;
 import backend.car_rental.entities.Client;
 import backend.car_rental.entities.Rental;
-import backend.car_rental.errors.Errors;
+import backend.car_rental.mapper.ClientMapper;
 import backend.car_rental.mapper.RentalMapper;
-import backend.car_rental.repositories.ICarRepository;
-import backend.car_rental.repositories.IClientRepository;
 import backend.car_rental.repositories.IRentalRepository;
+import backend.car_rental.services.car.interfaces.ICarFindByIdService;
+import backend.car_rental.services.rental.interfaces.IRentalCheckAvaibilityService;
 import backend.car_rental.services.rental.interfaces.ISaveRentalService;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class SaveRentalService implements ISaveRentalService {
 
-    @Autowired
     private IRentalRepository rentalRepository;
-
-    @Autowired
-    private ICarRepository carRepository;
-
-    @Autowired
-    private IClientRepository clientRepository;
+    private IRentalCheckAvaibilityService rentalCheckAvaibilityService;
+    private ICarFindByIdService carFindByIdService;
 
     @Override
-    public ResponseEntity<?> save(CreateRentalDto rentalDto, BindingResult result) {
+    @Transactional
+    public ResponseRentalDto save(CreateRentalDto rentalDto) {
+ 
+        Car car = carFindByIdService.findCarById(rentalDto.getCarId());
+
+        rentalCheckAvaibilityService.isAvailable(rentalDto.getCarId() , rentalDto.getStart(), rentalDto.getEnd());
         
-        List<Client> clientsToSave = new ArrayList<>();
+        List<Client> clientsToSave = ClientMapper.toEntityList(rentalDto.getClients());
 
-        if (result.hasErrors()) {
-            return Errors.returnSintaxErrors(result);
-        }
+        Rental rentalToSave = RentalMapper.toEntity(rentalDto, car , clientsToSave);
 
-        for (Long clientId : rentalDto.getClientIds()) {
-
-            Optional<Client> optionalClient = clientRepository.findById(clientId);
-            if (optionalClient.isEmpty()) {
-                return Errors.returnError(
-                "clientId", 
-                "Client " + clientId + " not found", 
-                404
-                );
-            }
-            clientsToSave.add(optionalClient.get());
-        }
-
-        Optional<Car> optionalCar = carRepository.findById(rentalDto.getCarId());
-         if (optionalCar.isEmpty()) {
-                return Errors.returnError(
-                "carId", 
-                "Car not found", 
-                404
-                );
-        }
-
-        Rental rentalToSave = RentalMapper.toEntity(rentalDto, optionalCar.get() , clientsToSave);
-
-        return ResponseEntity.ok(RentalMapper.toDto(rentalRepository.save(rentalToSave)));
-    }
-
-    @Override
-    public void delete(Rental rental) {
-        // rental.setDeleted(true);
-        // rentalRepository.save(rental);
+        return RentalMapper.toDto(rentalRepository.save(rentalToSave));
     }
     
 }

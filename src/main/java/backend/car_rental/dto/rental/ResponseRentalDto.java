@@ -27,6 +27,7 @@ public class ResponseRentalDto {
     private Location pickupLocation;
     private Location returnLocation;
     
+    private Long carId;
     private String carName;
     
     private double totalPrice;

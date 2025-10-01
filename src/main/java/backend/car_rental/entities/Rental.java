@@ -1,9 +1,8 @@
 package backend.car_rental.entities;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import backend.car_rental.enums.BabySeat;
@@ -11,6 +10,7 @@ import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
 import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,14 +19,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "rentals")
 public class Rental {
@@ -39,7 +42,7 @@ public class Rental {
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Client> clients;
 
     //El formato de LocalDateTime es: "2024-08-30T14:30:00"
@@ -49,9 +52,9 @@ public class Rental {
     private Location pickupLocation;
     private Location returnLocation;
     
-    private Insurance insurance; //Can be deductable or total
+    private Insurance insurance; //Puede ser deductable o total
     private BabySeat babySeat;
-    private TravelLocation travelLocation;//Null if the client is not traveling
+    private TravelLocation travelLocation; //Null si el cliente no viaja fuera de Miami
     private GasTank gasTank;
 
     private int daysRented;
@@ -64,14 +67,30 @@ public class Rental {
         calculateTotalPrice();
     }
 
-    private void calculateDaysRented(){ //Cambiar para que coincida con la regla de negocio
-        daysRented = (int) ChronoUnit.DAYS.between(start, end);
+    @PreUpdate
+    public void preUpdate(){
+
+        calculateDaysRented();        
+        calculateTotalPrice();
+        //No calculo el total ya que se puede modificar desde el frontend y no coincidir con la regla de negocio.
+    }
+
+    //A partir de las 3 horas, se cobra el dia completo
+    private void calculateDaysRented(){ 
+
+        Long totalHours = Duration.between(start, end).toHours();
+
+        daysRented = (int) (totalHours / 24);
+        
+        if (totalHours % 24 > 3){
+            daysRented++;
+        }
     }
 
     private void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
-        + insuranceChargue() + babySeatCharge();
+        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
     }
 
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto
@@ -93,7 +112,7 @@ public class Rental {
     }
 
     private int insuranceChargue(){
-        if (insurance == Insurance.DEDUCTIBLE){
+        if (insurance == Insurance.TOTAL){
             return 15 * daysRented;
         } else {
             return 0;
@@ -107,128 +126,14 @@ public class Rental {
             return 3 * daysRented;
         }
     }
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public Car getCar() {
-        return car;
-    }
-
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-
-    public long getDaysRented() {
-        return daysRented;
-    }
-
-
-    public void setDaysRented(int daysRented) {
-        this.daysRented = daysRented;
-    }
-
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-
-    public Location getPickupLocation() {
-        return pickupLocation;
-    }
-
-
-    public void setPickupLocation(Location pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-
-    public Location getReturnLocation() {
-        return returnLocation;
-    }
-
-
-    public void setReturnLocation(Location returnLocation) {
-        this.returnLocation = returnLocation;
-    }
-
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
-
-
-    public BabySeat getBabySeat() {
-        return babySeat;
-    }
-
-
-    public void setBabySeat(BabySeat babySeat) {
-        this.babySeat = babySeat;
-    }
-
-
-    public TravelLocation getTravelLocation() {
-        return travelLocation;
-    }
-
-
-    public void setTravelLocation(TravelLocation travelLocation) {
-        this.travelLocation = travelLocation;
-    }
-
-
-    public GasTank getGasTank() {
-        return gasTank;
-    }
-
-
-    public void setGasTank(GasTank gasTank) {
-        this.gasTank = gasTank;
-    }    
     
+    //A partir del segundo conductor adicional se le cobra 5 dolares por dia
+    private int additionalDriversCharge(){
+        if (clients.size() > 2){
+            return (daysRented * 5) * (clients.size() - 2);
+        } else {
+            return 0;
+            
+        }
+    }
 }
