@@ -33,7 +33,7 @@ public class SecurityConfig {
     private final IUserRepository userRepository;
 
     @Value("${ALLOWED_ORIGIN}")
-    private final String allowedOrigin;
+    private String allowedOrigin;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(IJwtService jwtService, IUserRepository userRepository) {
