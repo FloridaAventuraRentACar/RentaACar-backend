@@ -15,3 +15,4 @@ spring:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
 
 JWT_KEY: test_secret_key_de_32_caracteres_minimo
+ALLOWED_ORIGINS: http://localhost:3000

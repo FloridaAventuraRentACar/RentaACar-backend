@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: ${DB_URL}
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USER_NAME}
-    password: ${DB_PASSWORD}
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

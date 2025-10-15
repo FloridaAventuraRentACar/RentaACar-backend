@@ -1,7 +1,9 @@
 package backend.car_rental.config;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,6 +33,9 @@ public class SecurityConfig {
 
     private final IUserRepository userRepository;
 
+    @Value("${ALLOWED_ORIGINS}")
+    private String allowedOrigins;
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(IJwtService jwtService, IUserRepository userRepository) {
         return new JwtAuthenticationFilter(jwtService, userRepository);
@@ -59,15 +64,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() { // <--
+    public CorsConfigurationSource corsConfigurationSource() { 
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // <--
+        config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(","))); 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // <--
+        config.setAllowCredentials(true); 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // <--
+        source.registerCorsConfiguration("/**", config); 
         return source;
     }
 
