@@ -1,5 +1,7 @@
 package backend.car_rental.controlers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,5 +58,11 @@ public class RentalController {
         deleteRentalService.delete(id);
 
         return ResponseEntity.ok().body("Rental deleted successfully"); 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResponseRentalDto>> findAll(){
+
+        return ResponseEntity.ok().body(findRentalService.findAll()); 
     }
 }

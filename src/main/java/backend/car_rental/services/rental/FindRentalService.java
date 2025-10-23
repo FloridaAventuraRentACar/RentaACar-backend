@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Rental;
 import backend.car_rental.errors.Errors;
 import backend.car_rental.mapper.RentalMapper;
@@ -44,4 +45,12 @@ public class FindRentalService implements IFindRentalService{
         Rental rental = optionalRental.get();
         return ResponseEntity.ok(RentalMapper.toDto(rental));
     }
+
+    @Override
+    public List<ResponseRentalDto> findAll() {
+        
+        return RentalMapper.toDtoList((List<Rental>) rentalRepository.findAll());
+    }
+
+    
 }

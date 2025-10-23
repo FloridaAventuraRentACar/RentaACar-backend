@@ -46,6 +46,13 @@ public class RentalMapper {
             .build();
     }
 
+    public static List<ResponseRentalDto> toDtoList(List<Rental> rentals) {
+        return rentals
+            .stream()
+            .map(RentalMapper::toDto)
+            .toList();
+    }
+    
     public static CurrentRentalsResponseDto toCurrentRentalDto(Rental rental) {
         return CurrentRentalsResponseDto.builder()
             .id(rental.getId())
