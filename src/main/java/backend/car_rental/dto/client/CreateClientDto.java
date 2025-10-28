@@ -19,6 +19,7 @@ public class CreateClientDto {
 
     @Email
     private String email;
+
     private Long phone;
     private Long licenseNumber;
     private LocalDate bornDate;
@@ -26,5 +27,4 @@ public class CreateClientDto {
     private String licenseAddress;
     private LocalDate licenseExpirationDate;
     private Boolean mainDriver; //True if the client is the main driver of the car
-
 }

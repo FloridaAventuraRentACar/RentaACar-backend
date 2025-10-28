@@ -11,6 +11,7 @@ import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,16 +25,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateRentalDto {
     
+    @NotNull(message = "The id cannot be null")
     private Long carId;
 
     @NotEmpty
     @Valid
     private List<CreateClientDto> clients;
 
-    @Future
-    private LocalDateTime start;
+    @NotNull(message = "The start date cannot be null")
+    private LocalDateTime start; //Se pueden registrar alquileres que empiecen en el pasado pero no alquileres que ya hayan terminado
 
-    @Future
+    @Future(message = "The end date must be in the future")
+    @NotNull(message = "The end date cannot be null")
     private LocalDateTime end;
 
     @NotNull
@@ -50,4 +53,6 @@ public class CreateRentalDto {
     @NotNull
     private GasTank gasTank;
     
+    @Min(1)
+    private Double totalPrice;
 }

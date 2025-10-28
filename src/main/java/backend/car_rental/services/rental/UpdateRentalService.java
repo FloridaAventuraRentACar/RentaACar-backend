@@ -43,6 +43,8 @@ public class UpdateRentalService implements IUpdateRentalService {
 
         Rental rentalToSave = RentalMapper.toUpdateModel(id, rentalDto, car, clientsToSave);
 
+        rentalToSave.calculateDaysRented();
+
         return RentalMapper.toDto(rentalRepository.save(rentalToSave));
     }
     

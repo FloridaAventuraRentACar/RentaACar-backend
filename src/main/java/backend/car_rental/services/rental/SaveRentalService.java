@@ -36,6 +36,15 @@ public class SaveRentalService implements ISaveRentalService {
 
         Rental rentalToSave = RentalMapper.toEntity(rentalDto, car , clientsToSave);
 
+        rentalToSave.calculateDaysRented();
+
+        //Si totalPrice es null se calcula desde el back, sino se setea lo que llego del front
+        if (rentalDto.getTotalPrice() == null) {
+            rentalToSave.calculateTotalPrice();
+        }else{
+            rentalToSave.setTotalPrice(rentalDto.getTotalPrice());
+        }
+
         return RentalMapper.toDto(rentalRepository.save(rentalToSave));
     }
     

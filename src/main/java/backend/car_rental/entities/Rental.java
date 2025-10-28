@@ -18,7 +18,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -59,24 +58,9 @@ public class Rental {
 
     private int daysRented;
     private double totalPrice;
-    
-    @PrePersist
-    public void prePersist(){
-
-        calculateDaysRented();        
-        calculateTotalPrice();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-
-        calculateDaysRented();        
-        calculateTotalPrice();
-        //No calculo el total ya que se puede modificar desde el frontend y no coincidir con la regla de negocio.
-    }
 
     //A partir de las 3 horas, se cobra el dia completo
-    private void calculateDaysRented(){ 
+    public void calculateDaysRented(){ 
 
         Long totalHours = Duration.between(start, end).toHours();
 
@@ -87,7 +71,8 @@ public class Rental {
         }
     }
 
-    private void calculateTotalPrice(){
+    @PreUpdate
+    public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
         + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
