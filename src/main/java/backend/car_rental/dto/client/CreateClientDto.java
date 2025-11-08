@@ -26,5 +26,7 @@ public class CreateClientDto {
     private String licenseName;
     private String licenseAddress;
     private LocalDate licenseExpirationDate;
+    
+    private String flightNumber;
     private Boolean mainDriver; //True if the client is the main driver of the car
 }

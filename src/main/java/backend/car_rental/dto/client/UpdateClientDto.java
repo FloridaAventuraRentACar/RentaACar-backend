@@ -34,5 +34,7 @@ public class UpdateClientDto {
     private String licenseAddress;
     @NotNull
     private LocalDate licenseExpirationDate;
+
+    private String flightNumber;
     private Boolean mainDriver; //True if the client is the main driver of the car
 }
