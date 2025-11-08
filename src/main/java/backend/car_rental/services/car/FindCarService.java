@@ -46,7 +46,7 @@ public class FindCarService implements IFindCarService{
     @Override
     public ResponseEntity<List<ResponseCarDto>> getAvailableCars(LocalDateTime startDateTime,
             LocalDateTime endDateTime) {
-        List<Car> cars = carRepository.getAvailableCars(startDateTime, endDateTime);
+        List<Car> cars = carRepository.getAvailableCars(startDateTime.minusHours(2), endDateTime.plusHours(2)); //Debe haber una ventana de 2 horas entre alquileres
         return ResponseEntity.ok(CarMapper.toDtoList(cars));
     }
 }
