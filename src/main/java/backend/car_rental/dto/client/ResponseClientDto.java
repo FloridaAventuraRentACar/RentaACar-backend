@@ -21,6 +21,7 @@ public class ResponseClientDto {
     private String licenseName;
     private String licenseAddress;
     private LocalDate licenseExpirationDate;
+    private String flightNumber;
     private Boolean mainDriver;
 
 }

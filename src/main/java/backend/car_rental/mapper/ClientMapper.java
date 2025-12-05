@@ -20,6 +20,7 @@ public class ClientMapper {
             .licenseAddress(clientDto.getLicenseAddress())
             .bornDate(clientDto.getBornDate())
             .licenseExpirationDate(clientDto.getLicenseExpirationDate())
+            .flightNumber(clientDto.getFlightNumber())
             .mainDriver(clientDto.getMainDriver())
             .build();
     }
@@ -36,6 +37,7 @@ public class ClientMapper {
             .licenseName(client.getLicenseName())
             .licenseAddress(client.getLicenseAddress())
             .licenseExpirationDate(client.getLicenseExpirationDate())
+            .flightNumber(client.getFlightNumber())
             .mainDriver(client.getMainDriver())
             .build();
     }
@@ -64,6 +66,7 @@ public class ClientMapper {
             .licenseAddress(clientDto.getLicenseAddress())
             .bornDate(clientDto.getBornDate())
             .licenseExpirationDate(clientDto.getLicenseExpirationDate())
+            .flightNumber(clientDto.getFlightNumber())
             .mainDriver(clientDto.getMainDriver())
             .build();
     }
