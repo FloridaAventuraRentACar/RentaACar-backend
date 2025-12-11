@@ -1,18 +1,21 @@
 # Stage 1: build
-FROM eclipse-temurin:21 AS build
+# Usamos una imagen oficial de Maven que ya incluye Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
+
+# Copiamos solo el pom.xml primero para aprovechar la caché de capas
+COPY pom.xml .
+# Descargamos dependencias (opcional, pero acelera builds futuros)
+RUN mvn dependency:go-offline
+
+# Copiamos el código fuente
 COPY src src
-# Build the jar (skip tests if you want)
-RUN ./mvnw -B -DskipTests clean package
+
+RUN mvn -B -DskipTests clean package
 
 # Stage 2: run
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-# copia el jar del stage build
 COPY --from=build /app/target/*.jar app.jar
-# puerto expuesto por la app
 EXPOSE 8080
-# comando para iniciar la app
 ENTRYPOINT ["java","-jar","/app/app.jar"]
