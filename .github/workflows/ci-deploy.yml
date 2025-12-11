@@ -41,6 +41,9 @@ jobs:
     needs: build-and-push # Asegura que la imagen se construya y suba antes de desplegar
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
     - name: Setup SSH key
       # Este action gestiona la clave privada (VPS_SSH_KEY) y la añade al agente SSH.
       uses: webfactory/ssh-agent@v0.9.0
