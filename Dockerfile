@@ -1,16 +1,18 @@
-FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
+# Stage 1: build
+FROM eclipse-temurin:21 AS build
 WORKDIR /app
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
+COPY src src
+# Build the jar (skip tests if you want)
+RUN ./mvnw -B -DskipTests clean package
 
-COPY pom.xml .
-COPY src ./src
-
-RUN mvn clean package -DskipTests
-
-FROM eclipse-temurin:21-jre-alpine
+# Stage 2: run
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-
+# copia el jar del stage build
 COPY --from=build /app/target/*.jar app.jar
-
+# puerto expuesto por la app
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# comando para iniciar la app
+ENTRYPOINT ["java","-jar","/app/app.jar"]
