@@ -10,8 +10,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ResponseCarDto {
     private Long id;
-
-    private String plate; 
     
     private String brand; 
 
