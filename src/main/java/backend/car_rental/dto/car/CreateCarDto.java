@@ -12,9 +12,6 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class CreateCarDto {
-
-    @NotBlank(message = "The plate cannot be empty")
-    private String plate; 
     
     @NotBlank(message = "The brand cannot be empty")
     private String brand; 
@@ -28,6 +25,8 @@ public class CreateCarDto {
     @NotBlank(message = "The color cannot be empty")
     private String color;
 
+    private boolean showColorInName;
+    
     @Builder.Default
     private int passengersAmount = 5; 
 

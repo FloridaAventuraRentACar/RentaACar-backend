@@ -8,11 +8,11 @@ import java.util.List;
 public class CarMapper {
     public static Car toEntity(CreateCarDto carDto){
         return Car.builder()
-            .plate(carDto.getPlate())
             .brand(carDto.getBrand())
             .model(carDto.getModel())
             .year(carDto.getYear())
             .color(carDto.getColor())
+            .showColorInName(carDto.isShowColorInName())
             .passengersAmount(carDto.getPassengersAmount())
             .isManual(carDto.isManual())
             .suitcasesAmount(carDto.getSuitcasesAmount())
@@ -25,10 +25,9 @@ public class CarMapper {
     public static ResponseCarDto toDto(Car car){
         return ResponseCarDto.builder()
             .id(car.getId())
-            .plate(car.getPlate())
             .brand(car.getBrand())
             .model(car.getModel())
-            .name(car.getBrand() + " " + car.getModel())
+            .name(car.getBrand() + " " + car.getModel() + (car.isShowColorInName() ? "(" + car.getColor() + ")" : ""))
             .year(car.getYear())
             .color(car.getColor())
             .passengersAmount(car.getPassengersAmount())
