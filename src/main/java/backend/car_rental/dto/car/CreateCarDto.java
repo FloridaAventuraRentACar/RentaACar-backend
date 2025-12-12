@@ -25,8 +25,7 @@ public class CreateCarDto {
     @NotBlank(message = "The color cannot be empty")
     private String color;
 
-    @Builder.Default
-    private Boolean showColorInName = false;
+    private boolean showColorInName;
     
     @Builder.Default
     private int passengersAmount = 5; 

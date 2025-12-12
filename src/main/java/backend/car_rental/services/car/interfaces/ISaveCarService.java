@@ -12,5 +12,4 @@ import backend.car_rental.dto.car.CreateCarDto;
 public interface ISaveCarService {
 
     ResponseEntity<?> save(CreateCarDto carDto , BindingResult result);
-    ResponseEntity<?> update(CreateCarDto carDto,BindingResult result ,Long id);
 }

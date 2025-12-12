@@ -30,28 +30,6 @@ public class SaveCarService implements ISaveCarService{
         Car carSaved = carRepository.save(CarMapper.toEntity(carDto));
         return ResponseEntity.ok(CarMapper.toDto(carSaved));
     }
-
-    @Override
-    public ResponseEntity<?> update(CreateCarDto carDto, BindingResult result, Long id) {
-
-
-        Optional<Car> optionalCar = carRepository.findById(id);
-        if (optionalCar.isEmpty()) {
-            return Errors.returnError(
-                "id", 
-                "Car not found", 
-                404
-            );
-        }
-        if (result.hasErrors()) {
-            return Errors.returnSintaxErrors(result);
-        }
-
-        Car car = CarMapper.toEntity(carDto);
-        car.setId(id);
-
-        return ResponseEntity.ok().body(CarMapper.toDto(carRepository.save(car)));
-    }
     
 
 }

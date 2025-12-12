@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,25 +42,10 @@ public class CarController {
         return findCarService.findById(id);
     }
 
-    // @GetMapping("/plate/{plate}")
-    // public ResponseEntity<?> findByPlate(@PathVariable String plate){
-    //     Optional<Car> optionalCar = findCarService.findByPlate(plate);
-    //     if (optionalCar.isPresent()) {
-            
-    //         return ResponseEntity.ok().body(optionalCar.get());
-    //     }
-    //     return ResponseEntity.notFound().build();
-    // }
-
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody CreateCarDto carDto , BindingResult result){
 
         return saveCarService.save(carDto, result);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody CreateCarDto carDto, BindingResult result, @PathVariable Long id){
-      return saveCarService.update(carDto,result ,id);
     }
 
     @DeleteMapping("/{id}")

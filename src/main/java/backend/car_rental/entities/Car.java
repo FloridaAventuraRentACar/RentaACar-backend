@@ -34,8 +34,7 @@ public class Car {
 
     private String color;
 
-    @Builder.Default
-    private Boolean showColorInName = false;
+    private boolean showColorInName;
 
     private int passengersAmount; // Cantidad de pasajeros que entran en el auto
 
