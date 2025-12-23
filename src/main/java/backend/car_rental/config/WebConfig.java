@@ -16,6 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(apiKeyInterceptor)
-                .addPathPatterns("/**"); // Todas las rutas protegidas
+                .addPathPatterns("/**") // Todas las rutas protegidas
+                .excludePathPatterns("/actuator/health"); // Excepción para el endpoint de health
     }
 }
