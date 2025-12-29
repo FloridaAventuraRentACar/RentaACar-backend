@@ -50,4 +50,8 @@ public class Car {
     private CarType type; // Dependiendo el tipo, se le cobrara distinto el tanque de nafta
 
     private boolean hidden;// True si se quiere ocultar al auto
+
+    public String getName(){
+        return brand + " " + model;
+    }
 }
