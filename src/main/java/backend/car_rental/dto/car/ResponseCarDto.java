@@ -17,6 +17,8 @@ public class ResponseCarDto {
 
     private String name;
 
+    private Boolean showColorInName;
+    
     private int year; 
 
     private String color;

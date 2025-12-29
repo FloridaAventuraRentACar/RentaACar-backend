@@ -28,6 +28,7 @@ public class CarMapper {
             .brand(car.getBrand())
             .model(car.getModel())
             .name(car.getBrand() + " " + car.getModel() + (car.isShowColorInName() ? "(" + car.getColor() + ")" : ""))
+            .showColorInName(car.isShowColorInName())
             .year(car.getYear())
             .color(car.getColor())
             .passengersAmount(car.getPassengersAmount())
