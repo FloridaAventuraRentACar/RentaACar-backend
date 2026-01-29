@@ -24,6 +24,7 @@ public class RentalMapper {
             .babySeat(rentalDto.getBabySeat())
             .travelLocation(rentalDto.getTravelLocation())
             .gasTank(rentalDto.getGasTank())
+            .notes(rentalDto.getNotes())
             .build();
     }    
 
@@ -43,6 +44,7 @@ public class RentalMapper {
             .babySeat(rental.getBabySeat())
             .travelLocation(rental.getTravelLocation())
             .gasTank(rental.getGasTank())
+            .notes(rental.getNotes())
             .build();
     }
 
@@ -86,6 +88,7 @@ public class RentalMapper {
             .babySeat(rentalDto.getBabySeat())
             .travelLocation(rentalDto.getTravelLocation())
             .gasTank(rentalDto.getGasTank())
+            .notes(rentalDto.getNotes())
             .build();
     }
 

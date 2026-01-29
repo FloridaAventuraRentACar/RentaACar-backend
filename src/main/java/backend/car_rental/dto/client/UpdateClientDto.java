@@ -1,7 +1,6 @@
 package backend.car_rental.dto.client;
 
 import java.time.LocalDate;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
