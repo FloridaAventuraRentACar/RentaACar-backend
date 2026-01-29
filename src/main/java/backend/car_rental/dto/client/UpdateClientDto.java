@@ -22,17 +22,11 @@ public class UpdateClientDto {
 
     @Email
     private String email;
-    @NotNull
     private Long phone;
-    @NotNull
     private Long licenseNumber;
-    @NotNull
     private LocalDate bornDate;
-    @NotNull
     private String licenseName;
-    @NotNull
     private String licenseAddress;
-    @NotNull
     private LocalDate licenseExpirationDate;
 
     private String flightNumber;
