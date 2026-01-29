@@ -1,7 +1,6 @@
 package backend.car_rental.dto.client;
 
 import java.time.LocalDate;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,17 +21,11 @@ public class UpdateClientDto {
 
     @Email
     private String email;
-    @NotNull
     private Long phone;
-    @NotNull
     private Long licenseNumber;
-    @NotNull
     private LocalDate bornDate;
-    @NotNull
     private String licenseName;
-    @NotNull
     private String licenseAddress;
-    @NotNull
     private LocalDate licenseExpirationDate;
 
     private String flightNumber;

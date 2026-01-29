@@ -59,6 +59,8 @@ public class Rental {
     private int daysRented;
     private double totalPrice;
 
+    //Notas adicionales sobre el alquiler
+    private String notes;
     //A partir de las 3 horas, se cobra el dia completo
     public void calculateDaysRented(){ 
 

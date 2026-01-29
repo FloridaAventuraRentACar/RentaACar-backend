@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,4 +56,7 @@ public class CreateRentalDto {
     
     @Min(1)
     private Double totalPrice;
+
+    @Size(max = 500, message = "Las notas no pueden tener mas de 500 caracteres")
+    private String notes;
 }

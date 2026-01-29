@@ -48,4 +48,6 @@ public class UpdateRentalDto {
     private TravelLocation travelLocation;
     @NotNull
     private GasTank gasTank;
+    
+    private String notes;
 }
