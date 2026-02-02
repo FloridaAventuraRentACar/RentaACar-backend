@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import backend.car_rental.dto.rental.CurrentRentalsResponseDto;
 import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Rental;
 import backend.car_rental.errors.Errors;
@@ -22,7 +23,7 @@ public class FindRentalService implements IFindRentalService{
     private IRentalRepository rentalRepository;
 
     @Override
-    public ResponseEntity<?> findCurrentRentals() {
+    public ResponseEntity<List<CurrentRentalsResponseDto>> findCurrentRentals() {
         
         List<Rental> rentals = rentalRepository.findRentalsAfterDate(LocalDateTime.now().minusDays(1)); 
         //Obtengo el dia de ayer en vez del dia de hoy por si existe una alquiler que finaliza hoy
