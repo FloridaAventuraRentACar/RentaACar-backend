@@ -12,6 +12,7 @@ import backend.car_rental.mapper.ClientMapper;
 import backend.car_rental.mapper.RentalMapper;
 import backend.car_rental.repositories.IRentalRepository;
 import backend.car_rental.services.car.interfaces.ICarFindByIdService;
+import backend.car_rental.services.notifications.WhatsAppService;
 import backend.car_rental.services.rental.interfaces.IRentalCheckAvaibilityService;
 import backend.car_rental.services.rental.interfaces.ISaveRentalService;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,8 @@ public class SaveRentalService implements ISaveRentalService {
     private IRentalRepository rentalRepository;
     private IRentalCheckAvaibilityService rentalCheckAvaibilityService;
     private ICarFindByIdService carFindByIdService;
-
+    private WhatsAppService whatsappService;
+    
     @Override
     @Transactional
     public ResponseRentalDto save(CreateRentalDto rentalDto) {
@@ -44,8 +46,12 @@ public class SaveRentalService implements ISaveRentalService {
         }else{
             rentalToSave.setTotalPrice(rentalDto.getTotalPrice());
         }
+        Rental savedRental = rentalRepository.save(rentalToSave);
 
-        return RentalMapper.toDto(rentalRepository.save(rentalToSave));
+        //Envio notificacion al admin de manera asincrona
+        whatsappService.sendAdminNotification("Felipe Del Zoppo", "Volkswagen Tiguan", "2 de febrero de 2026", "10 de febrero de 2026", 3);
+
+        return RentalMapper.toDto(savedRental);
     }
     
 }
