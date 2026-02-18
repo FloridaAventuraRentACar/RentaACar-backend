@@ -73,7 +73,6 @@ public class Rental {
         }
     }
 
-    @PreUpdate
     public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
