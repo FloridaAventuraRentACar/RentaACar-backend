@@ -1,7 +1,6 @@
 package backend.car_rental.services.priceAdjustment;
 
 import org.springframework.stereotype.Service;
-
 import backend.car_rental.entities.PriceAdjustment;
 import backend.car_rental.repositories.IPriceAdjustmentRepository;
 import backend.car_rental.services.priceAdjustment.interfaces.IPriceAdjustmentDeleteService;
