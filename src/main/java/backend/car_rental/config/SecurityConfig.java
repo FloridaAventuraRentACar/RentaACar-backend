@@ -51,13 +51,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
             throws Exception {
         return http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Lambda DSL
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/rentals/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/cars").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/cars/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/cars/**").authenticated()
+                        .requestMatchers("/price-adjustment/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

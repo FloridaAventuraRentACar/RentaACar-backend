@@ -9,6 +9,7 @@ import backend.car_rental.enums.Insurance;
 import backend.car_rental.enums.Location;
 import backend.car_rental.enums.TravelLocation;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -49,5 +50,8 @@ public class UpdateRentalDto {
     @NotNull
     private GasTank gasTank;
     
+    @Min(value = 1, message = "Total price must be at least 1")
+    private Double totalPrice;
+
     private String notes;
 }

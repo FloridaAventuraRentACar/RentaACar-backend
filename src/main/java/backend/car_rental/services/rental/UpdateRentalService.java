@@ -45,6 +45,12 @@ public class UpdateRentalService implements IUpdateRentalService {
 
         rentalToSave.calculateDaysRented();
 
+        if (rentalDto.getTotalPrice() == null) {
+            rentalToSave.calculateTotalPrice();
+        }else{
+            rentalToSave.setTotalPrice(rentalDto.getTotalPrice());
+        }
+        
         return RentalMapper.toDto(rentalRepository.save(rentalToSave));
     }
     

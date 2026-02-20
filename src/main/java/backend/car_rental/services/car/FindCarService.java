@@ -1,10 +1,7 @@
 package backend.car_rental.services.car;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,28 +39,5 @@ public class FindCarService implements IFindCarService{
             );
         }
         return ResponseEntity.ok(CarMapper.toDto(optionalCar.get()));
-    }
-
-    @Override
-    public ResponseEntity<List<ResponseCarDto>> getAvailableCars(LocalDateTime startDateTime,
-            LocalDateTime endDateTime) {
-
-        List<Car> cars = carRepository.getAvailableCars(startDateTime.minusHours(2), endDateTime.plusHours(2)); 
-        //Debe haber una ventana de 2 horas entre alquileres
-
-        //Elimino de la lista los autos con el mismo nombre
-        List<Car> result = cars.stream()
-            .collect(Collectors.toMap(
-                Car::getName,          // clave: name
-                car -> car,            // valor: el objeto Car
-                (car1, car2) ->        // conflicto: mismo name
-                car1.getId() < car2.getId() ? car1 : car2
-            ))
-            .values()
-            .stream()
-            .sorted(Comparator.comparing(Car::getId))
-            .toList();
-        
-        return ResponseEntity.ok(CarMapper.toDtoList(result));
     }
 }
