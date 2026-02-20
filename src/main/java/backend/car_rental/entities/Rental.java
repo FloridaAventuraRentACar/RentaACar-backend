@@ -79,6 +79,13 @@ public class Rental {
         + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
     }
 
+    //Sobrecarga de metodo para calcular el precio total con un precio por dia dado (Cuando esta afectado por un ajuste de precios)
+    public void calculateTotalPrice(double pricePerDay){
+        totalPrice = pricePerDay * daysRented 
+        + gasTankCharge() + travelLocationCharge() 
+        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+    }
+
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto
     //dependiendo del tipo del auto
     private int gasTankCharge(){

@@ -7,12 +7,16 @@ import backend.car_rental.dto.rental.CreateRentalDto;
 import backend.car_rental.dto.rental.ResponseRentalDto;
 import backend.car_rental.entities.Car;
 import backend.car_rental.entities.Client;
+import backend.car_rental.entities.PriceAdjustment;
 import backend.car_rental.entities.Rental;
 import backend.car_rental.mapper.ClientMapper;
 import backend.car_rental.mapper.RentalMapper;
 import backend.car_rental.repositories.IRentalRepository;
 import backend.car_rental.services.car.interfaces.ICarFindByIdService;
+import backend.car_rental.services.commons.interfaces.ICalculateRentalDaysService;
 import backend.car_rental.services.notifications.WhatsAppService;
+import backend.car_rental.services.priceAdjustment.interfaces.IPriceAdjustmentCalculateAveragePriceService;
+import backend.car_rental.services.priceAdjustment.interfaces.IPriceAdjustmentFindOverlappingPeriodService;
 import backend.car_rental.services.rental.interfaces.IRentalCheckAvaibilityService;
 import backend.car_rental.services.rental.interfaces.ISaveRentalService;
 import lombok.AllArgsConstructor;
@@ -25,7 +29,10 @@ public class SaveRentalService implements ISaveRentalService {
     private IRentalCheckAvaibilityService rentalCheckAvaibilityService;
     private ICarFindByIdService carFindByIdService;
     private WhatsAppService whatsappService;
-    
+    private final IPriceAdjustmentFindOverlappingPeriodService priceAdjustmentFindOverlappingPeriodService;
+    private final ICalculateRentalDaysService calculateRentalDaysService;
+    private final IPriceAdjustmentCalculateAveragePriceService priceAdjustmentCalculateAveragePriceService;
+
     @Override
     @Transactional
     public ResponseRentalDto save(CreateRentalDto rentalDto) {
@@ -42,10 +49,23 @@ public class SaveRentalService implements ISaveRentalService {
 
         //Si totalPrice es null se calcula desde el back, sino se setea lo que llego del front
         if (rentalDto.getTotalPrice() == null) {
-            rentalToSave.calculateTotalPrice();
+            
+            //Chequeo si hay un ajuste de precios en las fechas de alquiler
+            List<PriceAdjustment> priceAdjustments = priceAdjustmentFindOverlappingPeriodService.findOverlappingsPeriod(rentalDto.getStart().toLocalDate(), rentalDto.getEnd().toLocalDate());
+            if (!priceAdjustments.isEmpty()) {
+                //Si hay ajuste de precios, calculo el precio promedio por dia del auto
+                long days = calculateRentalDaysService.calculateRentalDays(rentalDto.getStart(), rentalDto.getEnd());
+                double pricePerDay = priceAdjustmentCalculateAveragePriceService.calculateAverageDailyPrice(car, rentalDto.getStart(), rentalDto.getEnd(), priceAdjustments, days);
+
+                rentalToSave.calculateTotalPrice(pricePerDay);
+            } else {
+                rentalToSave.calculateTotalPrice();
+            }
+
         }else{
             rentalToSave.setTotalPrice(rentalDto.getTotalPrice());
         }
+
         Rental savedRental = rentalRepository.save(rentalToSave);
 
         //Envio notificacion al admin de manera asincrona
