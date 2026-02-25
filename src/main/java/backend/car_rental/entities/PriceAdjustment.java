@@ -3,6 +3,8 @@ package backend.car_rental.entities;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,6 +36,9 @@ public class PriceAdjustment {
     @Max(value = 5, message = "El multiplicador no puede ser mayor a 5")
     @Min(value = 0, message = "El multiplicador no puede ser menor a 0")
     private double multiplier; //Numero por el cual se multiplicaran los precios
+
+    @Enumerated(EnumType.STRING)
+    private PriceAdjustmentType type;
 
     @Size(max = 300, message = "La razon no puede tener mas de 300 caracteres")
     private String reason; 
