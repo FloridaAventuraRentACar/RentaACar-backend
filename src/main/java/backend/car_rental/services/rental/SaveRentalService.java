@@ -73,13 +73,15 @@ public class SaveRentalService implements ISaveRentalService {
 
         Rental savedRental = rentalRepository.save(rentalToSave);
 
-        // Envio notificacion al admin de manera asincrona
-        whatsappService.sendAdminNotification(
-            savedRental.getClients().get(0).getCompleteName(), 
-            savedRental.getCar().getName(), 
-            formatDateService.formatToSpanishDate(savedRental.getStart()),
-            formatDateService.formatToSpanishDate(savedRental.getEnd()),
-            savedRental.getId());
+        if (rentalDto.isNotifyAdmin()) {
+            // Envio notificacion al admin por whatsapp de manera asincrona
+            whatsappService.sendAdminNotification(
+                savedRental.getClients().get(0).getCompleteName(), 
+                savedRental.getCar().getName(), 
+                formatDateService.formatToSpanishDate(savedRental.getStart()),
+                formatDateService.formatToSpanishDate(savedRental.getEnd()),
+                savedRental.getId());
+        }
 
         return RentalMapper.toDto(savedRental);
     }
