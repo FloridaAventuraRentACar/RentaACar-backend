@@ -84,6 +84,7 @@ public class Rental {
         totalPrice = pricePerDay * daysRented 
         + gasTankCharge() + travelLocationCharge() 
         + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+        totalPrice = Math.round(totalPrice * 100.0) / 100.0; //Redondeo del precio total a dos decimales
     }
 
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto

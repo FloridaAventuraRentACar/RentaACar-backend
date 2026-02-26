@@ -56,7 +56,9 @@ public class CarGetAvailableService implements ICarGetAvailableService {
 
         if (!priceAdjustments.isEmpty()) {
             result.stream().forEach(car -> {
-                car.setPricePerDay(priceAdjustmentCalculateAveragePriceService.calculateAverageDailyPrice(car, startDateTime, endDateTime, priceAdjustments, days));
+                double pricePerDay = priceAdjustmentCalculateAveragePriceService.calculateAverageDailyPrice(car, startDateTime, endDateTime, priceAdjustments, days);
+                pricePerDay = Math.round(pricePerDay * 100.0) / 100.0; //redondeo a dos decimales
+                car.setPricePerDay(pricePerDay);
             });
         }
 

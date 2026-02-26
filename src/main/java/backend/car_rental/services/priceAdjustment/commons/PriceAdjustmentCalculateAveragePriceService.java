@@ -36,7 +36,6 @@ public class PriceAdjustmentCalculateAveragePriceService implements IPriceAdjust
                 // Si la fecha actual está entre el inicio y fin del ajuste (inclusive)
                 if (!currentDate.isBefore(adj.getPeriodStart()) && !currentDate.isAfter(adj.getPeriodEnd())) {
                     dailyPrice = dailyPrice * adj.getMultiplier();
-                    System.out.println("Price adjustment applied: " + adj.getMultiplier() + " for date: " + currentDate + ". Daily price: " + dailyPrice);
                     break; // Rompemos el bucle asumiendo que solo se aplica un ajuste por día
                 }
             }
