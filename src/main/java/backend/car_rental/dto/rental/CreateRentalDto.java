@@ -59,4 +59,7 @@ public class CreateRentalDto {
 
     @Size(max = 500, message = "Las notas no pueden tener mas de 500 caracteres")
     private String notes;
+
+    @Builder.Default
+    private boolean notifyAdmin = false; //Indica si el admin debe ser notificado por whatsapp
 }

@@ -1,5 +1,27 @@
-{"properties": [{
-  "name": "jwt.key",
-  "type": "java.lang.String",
-  "description": "A description for 'jwt.key'"
-}]}
+{"properties": [
+  {
+    "name": "jwt.key",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.key'"
+  },
+  {
+    "name": "twilio.account.sid",
+    "type": "java.lang.String",
+    "description": "A description for 'twilio.account.sid'"
+  },
+  {
+    "name": "twilio.auth.token",
+    "type": "java.lang.String",
+    "description": "A description for 'twilio.auth.token'"
+  },
+  {
+    "name": "twilio.whatsapp.number",
+    "type": "java.lang.String",
+    "description": "A description for 'twilio.whatsapp.number'"
+  },
+  {
+    "name": "admin.whatsapp.number",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.whatsapp.number'"
+  }
+]}

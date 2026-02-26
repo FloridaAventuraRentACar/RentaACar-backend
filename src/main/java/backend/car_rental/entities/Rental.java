@@ -73,11 +73,18 @@ public class Rental {
         }
     }
 
-    @PreUpdate
     public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
         + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+    }
+
+    //Sobrecarga de metodo para calcular el precio total con un precio por dia dado (Cuando esta afectado por un ajuste de precios)
+    public void calculateTotalPrice(double pricePerDay){
+        totalPrice = pricePerDay * daysRented 
+        + gasTankCharge() + travelLocationCharge() 
+        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+        totalPrice = Math.round(totalPrice * 100.0) / 100.0; //Redondeo del precio total a dos decimales
     }
 
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto

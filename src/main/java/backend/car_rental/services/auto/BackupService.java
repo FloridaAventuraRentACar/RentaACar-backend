@@ -2,13 +2,10 @@ package backend.car_rental.services.auto;
 
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -17,18 +14,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import backend.car_rental.dto.car.ResponseCarDto;
 import backend.car_rental.dto.rental.CurrentRentalsResponseDto;
-
 import backend.car_rental.services.car.interfaces.IFindCarService;
+import backend.car_rental.services.email.interfaces.IEmailService;
 import backend.car_rental.services.rental.interfaces.IFindRentalService;
-import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -37,8 +29,8 @@ public class BackupService {
 
     private final IFindCarService findCarService;
     private final IFindRentalService findRentalService;
-    private JavaMailSender mailSender;
-
+    private IEmailService emailService;
+    
     // Se ejecuta todos los lunes a las 3:00 AM
     @Scheduled(cron = "0 0 3 * * MON")
     public void generateBackup() {
@@ -112,7 +104,12 @@ public class BackupService {
             workbook.close();
 
             // 7. Enviar Email
-            sendEmailWithAttachment(excelBytes, "Backup_Disponibilidad_" + LocalDate.now() + ".xlsx");
+            emailService.sendEmail(
+                "Backup_Disponibilidad_" + LocalDate.now() + ".xlsx", 
+                "floridaaventuraok@gmail.com", 
+                "🚨 Backup Semanal de Disponibilidad - " + LocalDate.now(), 
+                "Adjunto se encuentra un excel con la disponibilidad de los autos los proximos 6 meses.", 
+                excelBytes);
 
         } catch (Exception e) {
             throw new RuntimeException("Error al generar el backup: " + e.getMessage());
@@ -131,18 +128,5 @@ public class BackupService {
                 .orElse(null);
     }
 
-    // Método auxiliar de envío
-    private void sendEmailWithAttachment(byte[] attachment, String filename) throws Exception {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        helper.setTo("floridaaventuraok@gmail.com");
-        helper.setSubject("🚨 Backup Semanal de Disponibilidad - " + LocalDate.now());
-        helper.setText("Adjunto se encuentra un excel con la disponibilidad de los autos los proximos 6 meses.");
-
-        // Adjuntar el array de bytes como archivo
-        helper.addAttachment(filename, new ByteArrayResource(attachment));
-
-        mailSender.send(message);
-    }
 }

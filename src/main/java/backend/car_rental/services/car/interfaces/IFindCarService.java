@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 import backend.car_rental.dto.car.ResponseCarDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -15,5 +14,4 @@ public interface IFindCarService {
 
     ResponseEntity<?> findById(Long id);
     
-    ResponseEntity<List<ResponseCarDto>> getAvailableCars(LocalDateTime startDateTime , LocalDateTime endDateTime);
 }

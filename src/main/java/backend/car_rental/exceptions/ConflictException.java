@@ -11,4 +11,8 @@ public class ConflictException extends CustomException {
     public ConflictException(String message, List<String> errors, String code) {
         super(message, HttpStatus.CONFLICT, errors, code);
     }
+
+    public ConflictException(String message) {
+        super(message, HttpStatus.CONFLICT, List.of(message), "CONFLICT");
+    }
 }
