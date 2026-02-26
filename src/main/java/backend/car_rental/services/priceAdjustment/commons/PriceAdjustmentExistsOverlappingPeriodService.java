@@ -21,4 +21,11 @@ public class PriceAdjustmentExistsOverlappingPeriodService implements IPriceAdju
             throw new ConflictException("El ajuste de precios se solapa con un ajuste existente");
         }
     }
+
+    @Override
+    public void existsOverlappingPeriodExceptFromId(Long id, LocalDate periodStart, LocalDate periodEnd) {
+        if(priceAdjustmentRepository.existsOverlappingPeriodExceptFromId(id, periodStart, periodEnd)) {
+            throw new ConflictException("El ajuste de precios se solapa con otro ajuste existente");
+        }
+    }
 }

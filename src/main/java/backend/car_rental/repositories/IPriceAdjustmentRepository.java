@@ -13,6 +13,9 @@ public interface IPriceAdjustmentRepository extends JpaRepository<PriceAdjustmen
     @Query("select CASE WHEN COUNT(p) > 0 THEN true ELSE false END from PriceAdjustment p where p.periodStart <= :periodEnd AND p.periodEnd >= :periodStart AND p.active = true")
     boolean existsOverlappingPeriod(LocalDate periodStart, LocalDate periodEnd);
 
+    @Query("select CASE WHEN COUNT(p) > 0 THEN true ELSE false END from PriceAdjustment p where p.periodStart <= :periodEnd AND p.periodEnd >= :periodStart AND p.active = true AND p.id <> :id")
+    boolean existsOverlappingPeriodExceptFromId(Long id, LocalDate periodStart, LocalDate periodEnd);
+
     @Query("select p from PriceAdjustment p where p.periodStart <= :periodEnd AND p.periodEnd >= :periodStart AND p.active = true")
     List<PriceAdjustment> findOverlappingsPeriod(LocalDate periodStart, LocalDate periodEnd);
 }

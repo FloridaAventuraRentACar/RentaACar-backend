@@ -24,6 +24,14 @@ public class PriceAdjustmentMapper {
                 .build();
     }
 
+    public static PriceAdjustment toUpdateEntity(Long id, PriceAdjustmentRequestDto priceAdjustmentRequestDto) {
+
+        PriceAdjustment priceAdjustment = toEntity(priceAdjustmentRequestDto);
+        priceAdjustment.setId(id);
+        return priceAdjustment;
+    }
+
+    
     public static PriceAdjustmentResponseDto toResponseDto(PriceAdjustment priceAdjustment) {
 
         double percentage = priceAdjustment.getMultiplier() > 1 ? 
