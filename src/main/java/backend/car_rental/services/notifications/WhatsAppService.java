@@ -1,7 +1,6 @@
 package backend.car_rental.services.notifications;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -13,22 +12,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 
 @Service
-@RequiredArgsConstructor
 public class WhatsAppService {
 
-    @Value("${twilio.account.sid}")
-    private String accountSid;
+    private final String accountSid;
+    private final String authToken;
+    private final String fromNumber;
+    private final String adminPhone;
+    private final ObjectMapper objectMapper;
 
-    @Value("${twilio.auth.token}")
-    private String authToken;
-
-    @Value("${twilio.whatsapp.number}")
-    private String fromNumber;
-
-    @Value("${admin.whatsapp.number}")
-    private String adminPhone;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    public WhatsAppService(
+            @Value("${twilio.account.sid}") String accountSid,
+            @Value("${twilio.auth.token}") String authToken,
+            @Value("${twilio.whatsapp.number}") String fromNumber,
+            @Value("${admin.whatsapp.number}") String adminPhone,
+            ObjectMapper objectMapper
+    ) {
+        this.accountSid = accountSid;
+        this.authToken = authToken;
+        this.fromNumber = fromNumber;
+        this.adminPhone = adminPhone;
+        this.objectMapper = objectMapper;
+    }
         
     @PostConstruct
     public void init() {
@@ -38,7 +42,7 @@ public class WhatsAppService {
 
     @Async
     public void sendAdminNotification(String clientName, String carName, String startDate, String endDate,
-            int rentalId) {
+            long rentalId) {
         try {
             Map<String, String> variables = new HashMap<>();
 
@@ -50,7 +54,7 @@ public class WhatsAppService {
 
             String contentVariables = objectMapper.writeValueAsString(variables);
 
-            Message message = Message.creator(
+            Message.creator(
                     new PhoneNumber(adminPhone),
                     new PhoneNumber(fromNumber),
                     "")

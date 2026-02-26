@@ -49,4 +49,7 @@ public class Client {
 
     private Boolean mainDriver; //True if the client is the main driver
  
+    public String getCompleteName(){
+        return this.name + " " + this.surname;
+    }
 }

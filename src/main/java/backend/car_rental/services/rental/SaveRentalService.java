@@ -14,6 +14,7 @@ import backend.car_rental.mapper.RentalMapper;
 import backend.car_rental.repositories.IRentalRepository;
 import backend.car_rental.services.car.interfaces.ICarFindByIdService;
 import backend.car_rental.services.commons.interfaces.ICalculateRentalDaysService;
+import backend.car_rental.services.commons.interfaces.IFormatDateService;
 import backend.car_rental.services.notifications.WhatsAppService;
 import backend.car_rental.services.priceAdjustment.interfaces.IPriceAdjustmentCalculateAveragePriceService;
 import backend.car_rental.services.priceAdjustment.interfaces.IPriceAdjustmentFindOverlappingPeriodService;
@@ -32,46 +33,55 @@ public class SaveRentalService implements ISaveRentalService {
     private final IPriceAdjustmentFindOverlappingPeriodService priceAdjustmentFindOverlappingPeriodService;
     private final ICalculateRentalDaysService calculateRentalDaysService;
     private final IPriceAdjustmentCalculateAveragePriceService priceAdjustmentCalculateAveragePriceService;
+    private final IFormatDateService formatDateService;
 
     @Override
     @Transactional
     public ResponseRentalDto save(CreateRentalDto rentalDto) {
- 
+
         Car car = carFindByIdService.findCarById(rentalDto.getCarId());
 
-        rentalCheckAvaibilityService.isAvailable(rentalDto.getCarId() , rentalDto.getStart(), rentalDto.getEnd());
-        
+        rentalCheckAvaibilityService.isAvailable(rentalDto.getCarId(), rentalDto.getStart(), rentalDto.getEnd());
+
         List<Client> clientsToSave = ClientMapper.toEntityList(rentalDto.getClients());
 
-        Rental rentalToSave = RentalMapper.toEntity(rentalDto, car , clientsToSave);
+        Rental rentalToSave = RentalMapper.toEntity(rentalDto, car, clientsToSave);
 
         rentalToSave.calculateDaysRented();
 
-        //Si totalPrice es null se calcula desde el back, sino se setea lo que llego del front
+        // Si totalPrice es null se calcula desde el back, sino se setea lo que llego
+        // del front
         if (rentalDto.getTotalPrice() == null) {
-            
-            //Chequeo si hay un ajuste de precios en las fechas de alquiler
-            List<PriceAdjustment> priceAdjustments = priceAdjustmentFindOverlappingPeriodService.findOverlappingsPeriod(rentalDto.getStart().toLocalDate(), rentalDto.getEnd().toLocalDate());
+
+            // Chequeo si hay un ajuste de precios en las fechas de alquiler
+            List<PriceAdjustment> priceAdjustments = priceAdjustmentFindOverlappingPeriodService
+                    .findOverlappingsPeriod(rentalDto.getStart().toLocalDate(), rentalDto.getEnd().toLocalDate());
             if (!priceAdjustments.isEmpty()) {
-                //Si hay ajuste de precios, calculo el precio promedio por dia del auto
+                // Si hay ajuste de precios, calculo el precio promedio por dia del auto
                 long days = calculateRentalDaysService.calculateRentalDays(rentalDto.getStart(), rentalDto.getEnd());
-                double pricePerDay = priceAdjustmentCalculateAveragePriceService.calculateAverageDailyPrice(car, rentalDto.getStart(), rentalDto.getEnd(), priceAdjustments, days);
+                double pricePerDay = priceAdjustmentCalculateAveragePriceService.calculateAverageDailyPrice(car,
+                        rentalDto.getStart(), rentalDto.getEnd(), priceAdjustments, days);
 
                 rentalToSave.calculateTotalPrice(pricePerDay);
             } else {
                 rentalToSave.calculateTotalPrice();
             }
 
-        }else{
+        } else {
             rentalToSave.setTotalPrice(rentalDto.getTotalPrice());
         }
 
         Rental savedRental = rentalRepository.save(rentalToSave);
 
-        //Envio notificacion al admin de manera asincrona
-        whatsappService.sendAdminNotification("Felipe Del Zoppo", "Volkswagen Tiguan", "2 de febrero de 2026", "10 de febrero de 2026", 3);
+        // Envio notificacion al admin de manera asincrona
+        whatsappService.sendAdminNotification(
+            savedRental.getClients().get(0).getCompleteName(), 
+            savedRental.getCar().getName(), 
+            formatDateService.formatToSpanishDate(savedRental.getStart()),
+            formatDateService.formatToSpanishDate(savedRental.getEnd()),
+            savedRental.getId());
 
         return RentalMapper.toDto(savedRental);
     }
-    
+
 }
