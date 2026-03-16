@@ -76,14 +76,14 @@ public class Rental {
     public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
         + gasTankCharge() + travelLocationCharge() 
-        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+        + insuranceChargue() + additionalDriversCharge();
     }
 
     //Sobrecarga de metodo para calcular el precio total con un precio por dia dado (Cuando esta afectado por un ajuste de precios)
     public void calculateTotalPrice(double pricePerDay){
         totalPrice = pricePerDay * daysRented 
         + gasTankCharge() + travelLocationCharge() 
-        + insuranceChargue() + babySeatCharge() + additionalDriversCharge();
+        + insuranceChargue() + additionalDriversCharge();
         totalPrice = Math.round(totalPrice * 100.0) / 100.0; //Redondeo del precio total a dos decimales
     }
 
@@ -110,14 +110,6 @@ public class Rental {
             return 15 * daysRented;
         } else {
             return 0;
-        }
-    }
-
-    private int babySeatCharge(){
-        if (babySeat == BabySeat.NONE){
-            return 0;
-        } else {
-            return 3 * daysRented;
         }
     }
     

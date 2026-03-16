@@ -18,7 +18,8 @@ public class BotApiKeyInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         
         String apiKeyHeader = request.getHeader("apiKey");
-        
+        System.out.println("ApiKeyEnv: " + botApiKeyEnv);
+        System.out.println("ApiKey header: " + apiKeyHeader);
         if (apiKeyHeader == null || !apiKeyHeader.equals(botApiKeyEnv)) {
             throw new UnauthorizedException("Invalid or missing API key");
         }
