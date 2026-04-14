@@ -57,6 +57,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/rentals/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/cars").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/cars/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/cars/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/cars/**").authenticated()
                         .requestMatchers("/price-adjustment/**").authenticated()
                         .anyRequest().permitAll())
