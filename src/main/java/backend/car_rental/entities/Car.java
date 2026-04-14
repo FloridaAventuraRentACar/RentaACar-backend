@@ -1,11 +1,15 @@
 package backend.car_rental.entities;
 
-import backend.car_rental.enums.CarType;
+import backend.car_rental.enums.CarSize;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +42,6 @@ public class Car {
 
     private int passengersAmount; // Cantidad de pasajeros que entran en el auto
 
-    private boolean isManual; // True si es manual, false si es automatico
-
     private int suitcasesAmount; // Cantidad de maletas que puede llevar el auto
 
     @NotNull
@@ -47,8 +49,13 @@ public class Car {
 
     private String imageUrl;
 
-    private CarType type; // Dependiendo el tipo, se le cobrara distinto el tanque de nafta
+    @Enumerated(EnumType.STRING)
+    private CarSize size; 
 
+    @Max(value = 200)
+    @Min(value = 0)
+    private int tankPrice; // Precio por llenar el tanque
+    
     private boolean hidden;// True si se quiere ocultar al auto
 
     public String getName(){

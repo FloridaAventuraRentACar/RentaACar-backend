@@ -1,6 +1,7 @@
 package backend.car_rental.dto.car;
 
-import backend.car_rental.enums.CarType;
+import backend.car_rental.enums.CarSize;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,8 +31,6 @@ public class CreateCarDto {
     @Builder.Default
     private int passengersAmount = 5; 
 
-    private boolean manual; 
-
     private int suitcasesAmount; 
 
     @Min(1)
@@ -40,5 +39,11 @@ public class CreateCarDto {
     private String imageUrl;
     
     @NotNull
-    private CarType type;
+    @Max(value = 200)
+    @Min(value = 0)
+    private int tankPrice;
+
+    @NotNull
+    private CarSize size;
+
 }
