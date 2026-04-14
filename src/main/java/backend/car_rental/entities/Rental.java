@@ -1,10 +1,8 @@
 package backend.car_rental.entities;
 
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import backend.car_rental.enums.BabySeat;
 import backend.car_rental.enums.GasTank;
 import backend.car_rental.enums.Insurance;
@@ -18,7 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -75,23 +72,23 @@ public class Rental {
 
     public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
-        + gasTankCharge() + travelLocationCharge() 
+        + car.getTankPrice() + travelLocationCharge() 
         + insuranceChargue() + additionalDriversCharge();
     }
 
     //Sobrecarga de metodo para calcular el precio total con un precio por dia dado (Cuando esta afectado por un ajuste de precios)
     public void calculateTotalPrice(double pricePerDay){
         totalPrice = pricePerDay * daysRented 
-        + gasTankCharge() + travelLocationCharge() 
+        + tankCharge() + travelLocationCharge() 
         + insuranceChargue() + additionalDriversCharge();
         totalPrice = Math.round(totalPrice * 100.0) / 100.0; //Redondeo del precio total a dos decimales
     }
 
     //Si selecciono que devolvera el tanque vacio, se le cobra un monto
     //dependiendo del tipo del auto
-    private int gasTankCharge(){
+    private int tankCharge(){
         if (gasTank == GasTank.EMPTY){
-            return car.getType().getPrice(); 
+            return car.getTankPrice(); 
         } else {
             return 0;
         }

@@ -1,6 +1,6 @@
 package backend.car_rental.dto.car;
 
-import backend.car_rental.enums.CarType;
+import backend.car_rental.enums.CarSize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,13 +26,13 @@ public class ResponseCarDto {
     @Builder.Default
     private int passengersAmount = 5; 
 
-    private boolean manual; 
-
     private int suitcasesAmount; 
 
     private double pricePerDay; 
 
     private String imageUrl;
 
-    private CarType type;
+    private CarSize size;
+
+    private int tankPrice;
 }
