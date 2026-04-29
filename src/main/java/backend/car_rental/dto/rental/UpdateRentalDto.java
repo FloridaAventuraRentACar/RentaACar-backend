@@ -46,7 +46,8 @@ public class UpdateRentalDto {
     @NotNull
     private BabySeat babySeat;
 
-    private TravelLocation travelLocation;
+    private List<TravelLocation> travelLocations;
+    
     @NotNull
     private GasTank gasTank;
     

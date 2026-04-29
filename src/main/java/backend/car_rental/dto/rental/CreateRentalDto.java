@@ -1,6 +1,7 @@
 package backend.car_rental.dto.rental;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import backend.car_rental.dto.client.CreateClientDto;
@@ -50,7 +51,10 @@ public class CreateRentalDto {
     
     @NotNull
     private BabySeat babySeat;
-    private TravelLocation travelLocation;
+    
+    @Builder.Default
+    private List<TravelLocation> travelLocations = new ArrayList<>();
+    
     @NotNull
     private GasTank gasTank;
     

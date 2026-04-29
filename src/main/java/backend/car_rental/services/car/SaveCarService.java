@@ -1,12 +1,9 @@
 package backend.car_rental.services.car;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-
 import backend.car_rental.dto.car.CreateCarDto;
 import backend.car_rental.entities.Car;
 import backend.car_rental.errors.Errors;
