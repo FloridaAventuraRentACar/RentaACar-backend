@@ -50,7 +50,7 @@ public class Rental {
     
     private Insurance insurance; //Puede ser deductable o total
     private BabySeat babySeat;
-    private TravelLocation travelLocation; //Null si el cliente no viaja fuera de Miami
+    private List<TravelLocation> travelLocations; //Null si el cliente no viaja fuera de Miami
     private GasTank gasTank;
 
     private int daysRented;
@@ -72,15 +72,17 @@ public class Rental {
 
     public void calculateTotalPrice(){
         totalPrice = car.getPricePerDay() * daysRented 
-        + car.getTankPrice() + travelLocationCharge() 
+        + tankCharge() + travelLocationCharge() 
         + insuranceChargue() + additionalDriversCharge();
     }
 
     //Sobrecarga de metodo para calcular el precio total con un precio por dia dado (Cuando esta afectado por un ajuste de precios)
     public void calculateTotalPrice(double pricePerDay){
+
         totalPrice = pricePerDay * daysRented 
         + tankCharge() + travelLocationCharge() 
         + insuranceChargue() + additionalDriversCharge();
+
         totalPrice = Math.round(totalPrice * 100.0) / 100.0; //Redondeo del precio total a dos decimales
     }
 
@@ -95,10 +97,11 @@ public class Rental {
     }
 
     private double travelLocationCharge(){
-        if (travelLocation == null){
-            return 0;
+        if (travelLocations == null || travelLocations.isEmpty()){
+            return 2.15 * daysRented;
         } else {
-            return travelLocation.getPrice();
+            double locationCharge = travelLocations.stream().mapToDouble(TravelLocation::getPrice).sum();
+            return locationCharge;
         }   
     }
 

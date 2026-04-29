@@ -38,7 +38,7 @@ public class ResponseRentalDto {
     
     private Insurance insurance;
     private BabySeat babySeat;
-    private TravelLocation travelLocation;
+    private List<TravelLocation> travelLocations;
     private GasTank gasTank;
 
     private String notes;
